@@ -1,72 +1,86 @@
-# 🤖 JARVIS AI Operating System (Enterprise Multi-Agent OS Kernel)
+<div align="center">
 
-![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)
-![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-009688.svg)
-![React](https://img.shields.io/badge/React-18.2.0-61DAFB.svg)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.2-blue.svg)
-![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+```text
+       ██████╗  █████╗ ██████╗ ██╗   ██╗██╗███████╗     █████╗ ██╗      ██████╗ ███████╗
+       ╚══██╔══╝██╔══██╗██╔══██╗██║   ██║██║██╔════╝    ██╔══██╗██║     ██╔═══██╗██╔════╝
+          ██║   ███████║██████╔╝██║   ██║██║███████╗    ███████║██║     ██║   ██║███████╗
+          ██║   ██╔══██║██╔══██╗╚██╗ ██╔╝██║╚════██║    ██╔══██║██║     ██║   ██║╚════██║
+          ██║   ██║  ██║██║  ██║ ╚████╔╝ ██║███████║    ██║  ██║██║     ╚██████╔╝███████║
+          ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝  ╚═══╝  ╚═╝╚══════╝    ╚═╝  ╚═╝╚═╝      ╚═════╝ ╚══════╝
+```
 
-An enterprise-grade, autonomous multi-agent Artificial Intelligence Operating System kernel. **JARVIS AI OS** provides an intelligent orchestrator featuring a 10-specialized agent swarm, Directed Acyclic Graph (DAG) task planner, 12-state microkernel workflow engine, 7-stage LLM provider router, multi-tier vector memory, Playwright browser and Windows desktop automation, computer vision, voice intelligence, and a modern glassmorphic web dashboard.
+# 🤖 JARVIS AI Operating System
+### *Enterprise Multi-Agent OS Kernel & Autonomous Swarm Platform*
+
+[![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg?style=for-the-badge&logo=semver)](https://github.com/mallikarjun086/JARVIS-AI-Operating-System)
+[![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110.0-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com)
+[![React](https://img.shields.io/badge/React-18.2.0-61DAFB.svg?style=for-the-badge&logo=react&logoColor=black)](https://react.dev)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.2-3178C6.svg?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org)
+[![Docker](https://img.shields.io/badge/Docker-Compose-2496ED.svg?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
+[![Build](https://img.shields.io/badge/Build-Passing-brightgreen.svg?style=for-the-badge)](https://github.com/mallikarjun086/JARVIS-AI-Operating-System)
+[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 ---
 
-## 🌟 Key Architecture & Subsystems
+</div>
 
+## 📌 Executive Summary
+
+**JARVIS AI OS** is a production-grade, enterprise autonomous multi-agent Artificial Intelligence Operating System kernel. Built upon a decoupled **Clean Architecture**, JARVIS integrates a **10-specialized agent swarm**, a **Directed Acyclic Graph (DAG) task planner**, a **12-state microkernel workflow engine**, a **7-stage LLM provider router**, a **multi-tier ChromaDB vector memory**, **Playwright web browser and Windows desktop automation**, **computer vision**, **voice intelligence**, and a state-of-the-art **glassmorphic React web dashboard**.
+
+---
+
+## 🏛️ System Architecture
+
+```text
+┌─────────────────────────────────────────────────────────────────────────────────────────┐
+│                          React 18 / TypeScript Web Dashboard                           │
+│                       (Glassmorphic Dark UI & Real-Time SSE)                            │
+└───────────────────────────────────────────┬─────────────────────────────────────────────┘
+                                            │ REST / SSE HTTP API
+┌───────────────────────────────────────────▼─────────────────────────────────────────────┐
+│                            FastAPI OS Kernel Router v1                                  │
+└───────────────────────────────────────────┬─────────────────────────────────────────────┘
+                                            │
+   ┌───────────────────┬────────────────────┼────────────────────┬───────────────────┐
+   │                   │                    │                    │                   │
+┌──▼─────────────┐  ┌──▼──────────────┐  ┌──▼────────────────┐  ┌──▼──────────────┐  ┌──▼──────────────┐
+│ 10-Agent Swarm │  │ Task Planner    │  │ 12-State Workflow │  │ 7-Stage LLM     │  │ Multi-Tier      │
+│ Orchestration  │  │ (DAG Kernel)    │  │ Microkernel       │  │ Provider Router │  │ Vector Memory   │
+└────────────────┘  └─────────────────┘  └───────────────────┘  └─────────────────┘  └─────────────────┘
 ```
-                               ┌─────────────────────────────────────────┐
-                               │  React 18 / TypeScript Web Dashboard    │
-                               │        (Glassmorphic Dark UI)           │
-                               └────────────────────┬────────────────────┘
-                                                    │ REST / SSE API
-                               ┌────────────────────▼────────────────────┐
-                               │         FastAPI Kernel & Router         │
-                               └────────────────────┬────────────────────┘
-                                                    │
-        ┌───────────────────┬───────────────────────┼───────────────────────┬───────────────────┐
-        │                   │                       │                       │                   │
-┌───────▼────────┐  ┌───────▼────────┐  ┌───────────▼───────────┐  ┌─────────▼────────┐  ┌───────▼────────┐
-│  10-Agent Swarm│  │ Task Planner   │  │ 12-State Workflow     │  │  7-Stage LLM      │  │ Multi-Tier     │
-│  Orchestration │  │ (DAG Engine)   │  │ Microkernel Engine    │  │  Provider Router  │  │ Vector Memory  │
-└────────────────┘  └────────────────┘  └───────────────────────┘  └───────────────────┘  └────────────────┘
-```
 
-### 🐝 1. 10-Specialized Agent Swarm Topology
-- **Agents**: `Coordinator`, `Planner`, `Research`, `Browser`, `Desktop`, `Coding`, `Memory`, `Vision`, `Voice`, and `Verifier`.
-- **Inter-Agent Message Bus**: Asynchronous message passing, capability graph routing, shared memory context synchronization, and quality gate consensus voting.
+---
 
-### 🗺️ 2. Intelligent Task Planner Kernel
-- **Intent Understanding**: Decomposes natural language user goals into atomic execution tasks.
-- **DAG Execution Engine**: Kahn's topological sorting algorithm for parallel task batching.
-- **Resilience**: Priority-based failure recovery policies (Retry, Skip non-critical, Rollback).
+## 🚀 Key Modules & Capabilities
 
-### 🔄 3. Microkernel Workflow Engine
-- **12 Execution States**: `CREATED`, `PLANNED`, `VALIDATED`, `WAITING_APPROVAL`, `READY`, `RUNNING`, `PAUSED`, `RETRYING`, `FAILED`, `ROLLING_BACK`, `COMPLETED`, `CANCELLED`.
-- **Saga Compensation**: Automated step-by-step saga rollback compensation on error.
-- **Checkpoints**: Immutable execution history logging and resource reservation management.
+| Subsystem Module | Description & Architecture Highlights |
+| :--- | :--- |
+| **🐝 10-Agent Swarm** | Specialized agents (`Coordinator`, `Planner`, `Research`, `Browser`, `Desktop`, `Coding`, `Memory`, `Vision`, `Voice`, `Verifier`) linked via inter-agent message bus & consensus voting. |
+| **🗺️ DAG Task Planner** | Natural language intent decomposer using Kahn's topological sorting algorithm for parallel task batching and priority recovery. |
+| **🔄 Workflow Microkernel** | 12-State execution machine (`CREATED` ➔ `RUNNING` ➔ `COMPLETED`) with automated step-by-step saga rollback compensation on error. |
+| **🤖 7-Stage LLM Router** | Smart pipeline (Health ➔ Capability ➔ Cost ➔ Priority ➔ Dispatch ➔ Retry ➔ Fallback) across OpenAI, Gemini, Claude, and MockProvider. |
+| **🧠 Vector Memory Store** | Multi-tier episodic and semantic storage backed by ChromaDB vector embeddings and multi-factor relevance ranking. |
+| **🌐 Browser Automation** | Playwright async engine supporting Chromium/Firefox, element interaction, tab management, screenshots, and human safety approval. |
+| **🖥️ OS Desktop Engine** | Windows High-DPI scaling process manager, window handle tracking, desktop input queues, and Tesseract OCR. |
+| **👁️ Vision & Voice AI** | Speech-to-Text (STT), Text-to-Speech (TTS), Voice Activity Detection (VAD), visual bounding box detection, and UI clickability scoring. |
+| **🔒 Enterprise Security** | JWT HS256 authentication, Bcrypt password hashing, administrator RBAC routes, and encrypted secret key vault storage. |
 
-### 🤖 4. 7-Stage LLM Provider Router
-- **Pipeline**: Health Filter ➔ Capability Filter ➔ Cost Filter ➔ Priority Rules ➔ Dispatch ➔ Retry ➔ Fallback.
-- **Multi-Provider Support**: OpenAI (`gpt-4o`), Google Gemini (`gemini-1.5-pro`), Anthropic Claude (`claude-3-5-sonnet`), and `MockProvider` for offline testing.
-- **SSE Streaming**: Real-time Server-Sent Events token streaming and cost tracking telemetry.
+---
 
-### 🧠 5. Multi-Tier Memory Subsystem
-- **Hybrid Storage**: Short-term conversation history + long-term ChromaDB vector embeddings.
-- **Ranking Engine**: Multi-factor scoring combining recency decay, frequency, similarity, and importance.
+## 🐝 10 Specialized Swarm Agents
 
-### 🌐 6. Browser & Windows Desktop Automation
-- **Playwright Web Controller**: Automated navigation, click, typing, screenshots, uploads, and human approval safety gatekeeper.
-- **Windows Desktop Engine**: High-DPI scaling awareness, window handle tracking, process management, OCR text detection, and desktop input queues.
-
-### 👁️ 7. Voice & Computer Vision Subsystem
-- **Vision Intelligence**: Visual OCR, bounding box UI element detection, and layout clickability scoring.
-- **Voice Intelligence**: Speech-To-Text (STT), Text-To-Speech (TTS), and Voice Activity Detection (VAD).
-
-### 🔒 8. Enterprise Security & Vault
-- **Authentication**: JWT Bearer authentication (`HS256`), Bcrypt password hashing.
-- **RBAC**: Administrator privilege verification (`get_current_active_superuser`).
-- **Audit Logs**: Encrypted secret key vault and system audit log trail.
+1. **👑 Coordinator Agent**: Manages top-level goal distribution and swarm task synchronization.
+2. **🗺️ Planner Agent**: Decomposes complex instructions into Directed Acyclic Graphs (DAG).
+3. **🔎 Research Agent**: Scrapes web docs, extracts knowledge items, and summarizes technical specs.
+4. **🌐 Browser Agent**: Executes headless Playwright automation (form input, web navigation, downloads).
+5. **🖥️ Desktop Agent**: Interacts with native OS desktop windows, OCR text recognition, and mouse/keyboard events.
+6. **💻 Coding Agent**: Autonomous software engineering, AST analysis, and automated code generation.
+7. **🧠 Memory Agent**: Stores, retrieves, and compresses short-term and long-term vector context.
+8. **👁️ Vision Agent**: UI component bounding box parser and visual layout clickability scoring.
+9. **🎙️ Voice Agent**: Handles STT speech recognition, TTS voice synthesis, and speaker profiling.
+10. **🛡️ Verifier Agent**: Quality gate gatekeeper verifying execution outputs against acceptance criteria.
 
 ---
 
@@ -78,7 +92,7 @@ JARVIS AI Operating System/
 │   ├── alembic/              # Database schema migrations
 │   ├── app/
 │   │   ├── ai/               # 7-stage LLM router, provider SDKs, prompts
-│   │   ├── api/              # 16 v1 REST API endpoint routers & dependency injection
+│   │   ├── api/              # 16 v1 REST API endpoint routers & deps
 │   │   ├── automation/       # Automation controller
 │   │   ├── browser/          # Playwright browser manager & safety gatekeeper
 │   │   ├── core/             # Event bus, logging, health manager, telemetry
@@ -120,18 +134,17 @@ JARVIS AI Operating System/
 ### Prerequisites
 - **Python**: 3.11 or 3.12
 - **Node.js**: 20+ and **npm**
-- **Docker & Docker Compose** (Optional for containerized mode)
+- **Docker & Docker Compose** (Optional)
 
 ---
 
-### Option A: Local Development Setup
+### 1️⃣ Start the Backend API Server
 
-#### 1. Start the Backend API Server
 ```powershell
 # Navigate to backend directory
 cd backend
 
-# Create and activate virtual environment (optional)
+# Create and activate virtual environment
 python -m venv venv
 .\venv\Scripts\Activate.ps1   # On Windows
 source venv/bin/activate       # On Linux/macOS
@@ -142,10 +155,14 @@ pip install -r requirements.txt
 # Start FastAPI server
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
-> 🟢 **Backend API**: [http://localhost:8000/docs](http://localhost:8000/docs) (Interactive Swagger UI)
+> 🟢 **Backend Swagger API Docs**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-#### 2. Start the Frontend Dashboard UI
+---
+
+### 2️⃣ Start the Frontend Dashboard UI
+
 Open a **new terminal window**:
+
 ```powershell
 # Navigate to frontend directory
 cd frontend
@@ -156,32 +173,32 @@ npm install
 # Start Vite development server
 npm run dev
 ```
-> 🟢 **Web Application**: [http://localhost:3000](http://localhost:3000)
+> 🟢 **Web Dashboard**: [http://localhost:3000](http://localhost:3000)
 
 ---
 
-### Option B: Containerized Launch with Docker Compose
+### 3️⃣ Containerized Launch (Docker Compose)
 
 ```powershell
-# Build and launch all services (PostgreSQL + FastAPI + Nginx React Frontend)
+# Build and launch PostgreSQL + Backend + Nginx Frontend
 docker-compose up --build -d
-
-# View running container status
-docker-compose ps
 ```
 
 ---
 
-## 🔐 Default Login Credentials
+## 🔐 Default Administrator Login
 
-- **Email**: `admin@jarvis.ai`
-- **Password**: `admin12345`
+| Parameter | Value |
+| :--- | :--- |
+| **Email** | `admin@jarvis.ai` |
+| **Password** | `admin12345` |
+| **API Base URL** | `http://localhost:8000/api/v1` |
 
 ---
 
 ## 🧪 Testing & Quality Assurance
 
-Run the comprehensive Pytest suite (174 unit and integration tests):
+Run the complete Pytest suite (174 unit and integration tests passing):
 
 ```powershell
 cd backend
@@ -190,15 +207,21 @@ pytest tests/ -v
 
 ---
 
-## 🚀 CI/CD Pipeline
+## 🔄 CI/CD Pipeline
 
-The repository includes a GitHub Actions pipeline (`.github/workflows/ci.yml`) performing:
-- **Backend Linting & Tests**: Python 3.11, PostgreSQL service container, Ruff linting, Pytest execution with coverage.
-- **Frontend Build Verification**: Node.js 20, dependency installation, TypeScript compilation, and production build check.
+The repository includes an optimized GitHub Actions matrix pipeline (`.github/workflows/ci.yml`):
+- **Backend Job**: Python 3.11, PostgreSQL service container, Ruff linting, Pytest execution with coverage.
+- **Frontend Job**: Node.js 20, dependency caching, TypeScript compilation, and production Vite build.
+
+---
+
+## 👤 Author & Maintainer
+
+Developed and maintained exclusively by:
+- **Mallikarjun Gala** ([@mallikarjun086](https://github.com/mallikarjun086))
 
 ---
 
 ## 📄 License
 
-Distributed under the **MIT License**. See `LICENSE` for more information.r e f r e s h   c o n t r i b u t o r   c a c h e  
- 
+Distributed under the **MIT License**. See `LICENSE` for details.
