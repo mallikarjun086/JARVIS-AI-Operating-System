@@ -54,7 +54,7 @@ export const VisionConsolePage: React.FC = () => {
       if (resp.data.elements.length > 0) {
         setSelectedElemId(resp.data.elements[0].element_id);
       }
-      setStatusMsg(`✓ Computer Vision Engine: Segmented ${resp.data.elements.length} target elements with clean zero-overlap bounding box alignment.`);
+      setStatusMsg(`✓ Computer Vision Perception Engine: Segmented ${resp.data.elements.length} target elements across ${resp.data.segments.length} visual regions.`);
     } catch (err: any) {
       setStatusMsg(`❌ Vision analysis error: ${err.response?.data?.detail || err.message}`);
     } finally {
@@ -74,18 +74,18 @@ export const VisionConsolePage: React.FC = () => {
     }
   };
 
-  // Precise clean coordinate mapping (non-overlapping inside tags)
-  const elemPresets: Record<string, { left: string; top: string; width: string; height: string; color: string; marker: string; title: string }> = {
-    'System Status: Online': { left: '68%', top: '4px', width: '65px', height: '26px', color: '#10b981', marker: '①', title: 'STATUS BADGE' },
-    'Settings Cog Icon': { left: '89%', top: '4px', width: '28px', height: '26px', color: '#a78bfa', marker: '②', title: 'SETTINGS ICON' },
-    'User Email Input': { left: '3.5%', top: '110px', width: '44%', height: '36px', color: '#38bdf8', marker: '③', title: 'EMAIL INPUT' },
-    'Submit Request': { left: '52.5%', top: '110px', width: '44%', height: '36px', color: '#f59e0b', marker: '④', title: 'SUBMIT BUTTON' },
+  // Clean, sleek radar coordinates layout for target elements
+  const targetPresets: Record<string, { left: string; top: string; width: string; height: string; color: string; badge: string }> = {
+    'System Status: Online': { left: '10%', top: '25%', width: '36%', height: '55px', color: '#10b981', badge: 'STATUS BADGE' },
+    'Settings Cog Icon': { left: '54%', top: '25%', width: '36%', height: '55px', color: '#a78bfa', badge: 'SETTINGS ICON' },
+    'User Email Input': { left: '10%', top: '55%', width: '36%', height: '55px', color: '#38bdf8', badge: 'EMAIL INPUT' },
+    'Submit Request': { left: '54%', top: '55%', width: '36%', height: '55px', color: '#f59e0b', badge: 'SUBMIT BUTTON' },
   };
 
   return (
     <div style={{ maxWidth: '1440px', margin: '0 auto', paddingBottom: '2.5rem' }}>
       
-      {/* Page Header */}
+      {/* Top Header */}
       <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
           <div style={{ background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(139, 92, 246, 0.25))', padding: '0.75rem', borderRadius: '12px', border: '1px solid rgba(6, 182, 212, 0.4)', boxShadow: '0 0 20px rgba(6, 182, 212, 0.2)' }}>
@@ -96,7 +96,7 @@ export const VisionConsolePage: React.FC = () => {
               Computer Vision Perception Console
             </h1>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginTop: '0.2rem', margin: 0 }}>
-              Visual OCR, Precision GUI Bounding Box Segmentation & Action Target Perception Engine
+              Visual OCR, Precision GUI Element Target Detection & Perception Engine
             </p>
           </div>
         </div>
@@ -109,7 +109,7 @@ export const VisionConsolePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Notification Banner */}
+      {/* Status Notification */}
       {statusMsg && (
         <div style={{ background: 'rgba(6, 182, 212, 0.12)', border: '1px solid rgba(6, 182, 212, 0.3)', color: '#67e8f9', padding: '0.85rem 1.25rem', borderRadius: '10px', marginBottom: '1.25rem', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           <Sparkles size={16} color="#38bdf8" />
@@ -117,7 +117,7 @@ export const VisionConsolePage: React.FC = () => {
         </div>
       )}
 
-      {/* Goal Prompt Bar */}
+      {/* Goal Input & Trigger Bar */}
       <div className="glass-panel" style={{ padding: '1.15rem 1.35rem', marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           <div style={{ position: 'relative', flex: 1 }}>
@@ -125,7 +125,7 @@ export const VisionConsolePage: React.FC = () => {
               type="text"
               value={taskGoal}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => setTaskGoal(e.target.value)}
-              placeholder="Enter vision prompt goal..."
+              placeholder="Enter vision reasoning goal prompt..."
               style={{
                 width: '100%',
                 padding: '0.85rem 1rem 0.85rem 2.6rem',
@@ -151,33 +151,33 @@ export const VisionConsolePage: React.FC = () => {
         </div>
       </div>
 
-      {/* Main Grid: Desktop Window + Element Inspector */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.15fr 0.85fr', gap: '1.5rem', alignItems: 'start' }}>
+      {/* Grid Layout: High-Tech Radar Canvas + Inspector */}
+      <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '1.5rem', alignItems: 'start' }}>
         
-        {/* Left Column: Bounding Box Canvas */}
+        {/* Left Column: High-Tech Vision Radar Target Display */}
         <div className="glass-panel" style={{ padding: '1.35rem', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <Box size={18} color="#38bdf8" />
-              <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>GUI Bounding Box Canvas</span>
+              <span style={{ fontSize: '1.05rem', fontWeight: 700, color: '#fff' }}>Vision Target Perception Radar</span>
             </div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', background: 'rgba(15, 23, 42, 0.8)', padding: '0.25rem 0.65rem', borderRadius: '6px', border: '1px solid var(--border-color)' }}>
-              Target Resolution: 1920 × 1080
+              Resolution: 1920 × 1080
             </span>
           </div>
 
-          {/* Desktop Frame Window Container */}
+          {/* High-Tech Radar Canvas Display */}
           <div style={{
             position: 'relative',
             width: '100%',
             height: '320px',
-            background: '#070b14',
+            background: 'radial-gradient(circle at 50% 50%, #0d1527 0%, #050811 100%)',
             borderRadius: '10px',
             border: '1px solid rgba(255, 255, 255, 0.12)',
             overflow: 'hidden',
             boxShadow: '0 20px 40px rgba(0, 0, 0, 0.6)'
           }}>
-            {/* Window Titlebar */}
+            {/* Window Header */}
             <div style={{
               height: '36px',
               background: '#0f172a',
@@ -193,53 +193,34 @@ export const VisionConsolePage: React.FC = () => {
                 <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#22c55e' }} />
               </div>
               <span style={{ fontSize: '0.75rem', color: '#cbd5e1', fontWeight: 600 }}>
-                JARVIS Vision Perception Display
+                JARVIS Vision Target Detection Display
               </span>
-              <span className="badge-success" style={{ fontSize: '0.65rem', padding: '1px 6px' }}>● LIVE OVERLAY</span>
+              <span className="badge-success" style={{ fontSize: '0.65rem', padding: '1px 6px' }}>● LIVE TARGET SCAN</span>
             </div>
 
-            {/* Inner Desktop Application Interface */}
-            <div style={{ position: 'relative', height: 'calc(100% - 36px)', padding: '1rem', background: '#090e1a' }}>
-              
-              {/* Row 1: Header Bar */}
-              <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: '34px' }}>
-                <div style={{ color: '#f8fafc', fontWeight: 700, fontSize: '0.9rem' }}>JARVIS Control Center</div>
-                <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
-                  <div style={{ background: 'rgba(16, 185, 129, 0.2)', color: '#34d399', fontSize: '0.7rem', padding: '0.2rem 0.6rem', borderRadius: '4px', border: '1px solid rgba(16, 185, 129, 0.3)', fontWeight: 600 }}>
-                    Online
-                  </div>
-                  <div style={{ background: 'rgba(255,255,255,0.06)', color: '#94a3b8', fontSize: '0.7rem', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>
-                    ⚙
-                  </div>
-                </div>
-              </div>
+            {/* Subtle High-Tech Blueprint Grid Lines */}
+            <div style={{
+              position: 'absolute',
+              top: '36px',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
+              backgroundSize: '40px 40px',
+              pointerEvents: 'none'
+            }} />
 
-              {/* Row 2: Form Input Grid */}
-              <div style={{ marginTop: '1.5rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                
-                {/* Email Box */}
-                <div style={{ background: 'rgba(15, 23, 42, 0.8)', padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <div style={{ fontSize: '0.7rem', color: '#64748b', marginBottom: '0.4rem' }}>User Email Address</div>
-                  <div style={{ background: '#020617', padding: '0.45rem 0.6rem', borderRadius: '6px', fontSize: '0.775rem', color: '#cbd5e1' }}>
-                    admin@jarvis.ai
-                  </div>
-                </div>
-
-                {/* Submit Button Box */}
-                <div style={{ background: 'rgba(15, 23, 42, 0.8)', padding: '0.75rem', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                  <div style={{ fontSize: '0.7rem', color: '#64748b', marginBottom: '0.4rem' }}>Action Target</div>
-                  <div style={{ background: 'linear-gradient(135deg, #0284c7, #0369a1)', color: '#fff', padding: '0.45rem 0.6rem', borderRadius: '6px', fontSize: '0.775rem', fontWeight: 700, textAlign: 'center' }}>
-                    Submit Request
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Bounding Box Highlights (Strict zero-overlap inner corner tags) */}
+            {/* Target Detection Cards */}
+            <div style={{ position: 'relative', height: 'calc(100% - 36px)', padding: '1rem' }}>
               {analysis?.elements.map((elem: DetectedUIElement, idx: number) => {
                 const isSelected = selectedElemId === elem.element_id;
-                const preset = elemPresets[elem.label] || elemPresets[elem.element_id] || {
-                  left: `${5 + idx * 24}%`, top: '110px', width: '22%', height: '36px', color: '#38bdf8', marker: `${idx + 1}`, title: elem.label
+                const preset = targetPresets[elem.label] || {
+                  left: `${10 + (idx % 2) * 44}%`,
+                  top: `${25 + Math.floor(idx / 2) * 30}%`,
+                  width: '38%',
+                  height: '55px',
+                  color: '#38bdf8',
+                  badge: elem.element_type
                 };
 
                 return (
@@ -252,42 +233,43 @@ export const VisionConsolePage: React.FC = () => {
                       top: preset.top,
                       width: preset.width,
                       height: preset.height,
-                      border: `2px solid ${preset.color}`,
-                      background: isSelected ? 'rgba(56, 189, 248, 0.22)' : 'rgba(6, 182, 212, 0.08)',
-                      borderRadius: '6px',
+                      background: isSelected ? 'rgba(56, 189, 248, 0.18)' : 'rgba(15, 23, 42, 0.75)',
+                      border: isSelected ? `2px solid ${preset.color}` : '1px solid rgba(255, 255, 255, 0.1)',
+                      borderRadius: '10px',
+                      padding: '0.65rem 0.85rem',
                       cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                      boxShadow: isSelected ? `0 0 15px ${preset.color}` : 'none',
-                      pointerEvents: 'auto'
-                    }}
-                  >
-                    {/* Inner Corner Marker Badge - Zero Overlap! */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '2px',
-                      left: '2px',
-                      background: preset.color,
-                      color: '#000',
-                      fontSize: '0.65rem',
-                      fontWeight: 800,
-                      width: '16px',
-                      height: '16px',
-                      borderRadius: '50%',
+                      transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                      boxShadow: isSelected ? `0 0 20px ${preset.color}` : '0 4px 15px rgba(0,0,0,0.3)',
                       display: 'flex',
                       alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 2px 4px rgba(0,0,0,0.5)'
-                    }}>
-                      {preset.marker}
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <div>
+                      <div style={{ fontSize: '0.8rem', color: '#fff', fontWeight: 700 }}>{elem.label}</div>
+                      <div style={{ fontSize: '0.675rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+                        {elem.element_type} • ID: {elem.element_id}
+                      </div>
                     </div>
+
+                    <span style={{
+                      fontSize: '0.65rem',
+                      background: `${preset.color}25`,
+                      color: preset.color,
+                      border: `1px solid ${preset.color}50`,
+                      padding: '0.2rem 0.5rem',
+                      borderRadius: '5px',
+                      fontWeight: 700
+                    }}>
+                      {(elem.confidence * 100).toFixed(0)}%
+                    </span>
                   </div>
                 );
               })}
-
             </div>
           </div>
 
-          {/* OCR Extracted Text Payload */}
+          {/* OCR Extracted Text Box */}
           {analysis && (
             <div style={{ marginTop: '1rem', background: 'rgba(15, 23, 42, 0.75)', padding: '0.85rem 1.15rem', borderRadius: '10px', border: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
@@ -319,7 +301,7 @@ export const VisionConsolePage: React.FC = () => {
           )}
         </div>
 
-        {/* Right Column: Scene Reasoning & Target Elements Inspector */}
+        {/* Right Column: Multi-Modal Scene Reasoning & Target Elements Table */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
           
           {/* Scene Reasoning Card */}
@@ -354,7 +336,6 @@ export const VisionConsolePage: React.FC = () => {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
               {analysis?.elements.map((elem: DetectedUIElement) => {
                 const isSelected = selectedElemId === elem.element_id;
-                const preset = elemPresets[elem.label] || { marker: '●', title: elem.label };
                 return (
                   <div
                     key={elem.element_id}
@@ -373,9 +354,6 @@ export const VisionConsolePage: React.FC = () => {
                   >
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                        <span style={{ fontSize: '0.75rem', color: '#000', background: '#38bdf8', padding: '1px 6px', borderRadius: '50%', fontWeight: 800 }}>
-                          {preset.marker}
-                        </span>
                         <span style={{ fontSize: '0.85rem', color: '#fff', fontWeight: 600 }}>{elem.label}</span>
                         <span style={{ fontSize: '0.65rem', background: 'rgba(255,255,255,0.08)', color: '#cbd5e1', padding: '2px 6px', borderRadius: '4px', fontWeight: 600 }}>
                           {elem.element_type}
