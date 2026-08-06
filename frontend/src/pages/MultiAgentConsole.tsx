@@ -50,7 +50,9 @@ export const MultiAgentConsolePage: React.FC = () => {
         api.get<Record<string, any>>('/multi-agent/shared-memory'),
       ]);
       setTelemetry(Array.isArray(tRes.data) ? tRes.data : []);
-      const msgList = Array.isArray(mRes.data) ? mRes.data : (mRes.data?.messages || []);
+      const msgList: AgentMessage[] = Array.isArray(mRes.data)
+        ? mRes.data
+        : (Array.isArray(mRes.data?.messages) ? mRes.data.messages : []);
       setMessages(msgList);
       setSharedMem(memRes.data || {});
     } catch (err) {
