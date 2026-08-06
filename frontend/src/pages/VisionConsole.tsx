@@ -185,7 +185,7 @@ export const VisionConsolePage: React.FC = () => {
               display: 'flex',
               alignItems: 'center',
               padding: '0 0.85rem',
-              justify: 'space-between'
+              justifyContent: 'space-between'
             }}>
               <div style={{ display: 'flex', gap: '6px' }}>
                 <div style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#ef4444' }} />
@@ -348,7 +348,7 @@ export const VisionConsolePage: React.FC = () => {
                       cursor: 'pointer',
                       transition: 'all 0.15s ease',
                       display: 'flex',
-                      justify: 'space-between',
+                      justifyContent: 'space-between',
                       alignItems: 'center'
                     }}
                   >
