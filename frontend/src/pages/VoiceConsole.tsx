@@ -206,7 +206,7 @@ export const VoiceConsolePage: React.FC = () => {
                   padding: '0.85rem 1rem',
                   borderRadius: '8px',
                   display: 'flex',
-                  justify: 'space-between',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   cursor: 'pointer'
                 }}

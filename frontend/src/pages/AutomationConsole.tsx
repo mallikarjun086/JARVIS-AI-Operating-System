@@ -10,7 +10,7 @@ interface WindowInfo {
   y: number;
   width: number;
   height: number;
-  is_active: bool;
+  is_active: boolean;
 }
 
 interface AutomationResponse {
@@ -19,7 +19,7 @@ interface AutomationResponse {
   status: string;
   result?: any;
   error_message?: string;
-  is_reversible: bool;
+  is_reversible: boolean;
   undo_action_id?: string;
 }
 

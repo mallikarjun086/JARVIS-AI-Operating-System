@@ -4,9 +4,9 @@ import { Globe, Plus, X, Camera, ShieldAlert, Sparkles, Code, CheckCircle, Alert
 
 interface TabInfo {
   tab_id: string;
-  url: str;
-  title: str;
-  is_active: bool;
+  url: string;
+  title: string;
+  is_active: boolean;
 }
 
 interface HumanApprovalRequest {
@@ -23,7 +23,7 @@ interface BrowserActionResponse {
   status: string;
   result?: any;
   error_message?: string;
-  requires_approval: bool;
+  requires_approval: boolean;
   approval_id?: string;
 }
 
