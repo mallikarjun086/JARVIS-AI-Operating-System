@@ -1,0 +1,242 @@
+[
+  {
+    "log_id": "mod-65331a40",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-0\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-cd999133",
+    "timestamp": "2026-08-05T16:36:18.222567"
+  },
+  {
+    "log_id": "mod-be00ded9",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-0\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-3f735a40",
+    "timestamp": "2026-08-05T16:36:18.729042"
+  },
+  {
+    "log_id": "mod-d345e45b",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-1\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-68fd0da8",
+    "timestamp": "2026-08-05T16:41:44.448461"
+  },
+  {
+    "log_id": "mod-0433073f",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-1\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-840d4760",
+    "timestamp": "2026-08-05T16:41:44.908889"
+  },
+  {
+    "log_id": "mod-f22a6842",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-2\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-ac9cc172",
+    "timestamp": "2026-08-05T16:45:49.481764"
+  },
+  {
+    "log_id": "mod-da7cb406",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-2\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-26d6b7a1",
+    "timestamp": "2026-08-05T16:45:49.919500"
+  },
+  {
+    "log_id": "mod-ce574a05",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-3\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-eab51ae8",
+    "timestamp": "2026-08-05T16:50:08.491233"
+  },
+  {
+    "log_id": "mod-dc2dad9e",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-3\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-75ee8ac0",
+    "timestamp": "2026-08-05T16:50:08.952828"
+  },
+  {
+    "log_id": "mod-3f5f58cb",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-4\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-323ea1ec",
+    "timestamp": "2026-08-05T16:53:31.361841"
+  },
+  {
+    "log_id": "mod-23bb6fd7",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-4\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-fdc8332a",
+    "timestamp": "2026-08-05T16:53:31.784996"
+  },
+  {
+    "log_id": "mod-c294f724",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-5\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-3e7cb33f",
+    "timestamp": "2026-08-05T16:55:45.542771"
+  },
+  {
+    "log_id": "mod-d52fe5f0",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-5\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-40805e03",
+    "timestamp": "2026-08-05T16:55:45.952080"
+  },
+  {
+    "log_id": "mod-0b75b6b2",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-6\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-1f95c950",
+    "timestamp": "2026-08-05T17:00:50.794344"
+  },
+  {
+    "log_id": "mod-28c4cd4f",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-6\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-fc124a2a",
+    "timestamp": "2026-08-05T17:00:51.239474"
+  },
+  {
+    "log_id": "mod-97955287",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-7\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-b1d7dc6f",
+    "timestamp": "2026-08-05T17:06:40.567675"
+  },
+  {
+    "log_id": "mod-16015e72",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-7\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-7a824c41",
+    "timestamp": "2026-08-05T17:06:40.931920"
+  },
+  {
+    "log_id": "mod-38b13a88",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-8\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-9df82b6b",
+    "timestamp": "2026-08-05T17:12:05.863227"
+  },
+  {
+    "log_id": "mod-2bb55bff",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-8\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-67f3573c",
+    "timestamp": "2026-08-05T17:12:06.241279"
+  },
+  {
+    "log_id": "mod-6c386444",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-9\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-2a76e045",
+    "timestamp": "2026-08-05T17:21:06.225881"
+  },
+  {
+    "log_id": "mod-51c86350",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-9\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-8da5a337",
+    "timestamp": "2026-08-05T17:21:06.462537"
+  },
+  {
+    "log_id": "mod-7e3f3a13",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-10\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-08a402b1",
+    "timestamp": "2026-08-05T17:22:15.149205"
+  },
+  {
+    "log_id": "mod-9bbc1be4",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-10\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-9bf696d2",
+    "timestamp": "2026-08-05T17:22:15.380490"
+  },
+  {
+    "log_id": "mod-4be30fe6",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-11\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-d490a285",
+    "timestamp": "2026-08-05T17:26:03.220452"
+  },
+  {
+    "log_id": "mod-5bb7fd32",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-11\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-66ee48e1",
+    "timestamp": "2026-08-05T17:26:03.433434"
+  },
+  {
+    "log_id": "mod-55c9d22d",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-12\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-e3520901",
+    "timestamp": "2026-08-05T17:29:00.312246"
+  },
+  {
+    "log_id": "mod-d7d86e0d",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-12\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-a745ef77",
+    "timestamp": "2026-08-05T17:29:00.529393"
+  },
+  {
+    "log_id": "mod-8e712bf5",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-13\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-f12cd7ca",
+    "timestamp": "2026-08-05T17:31:35.560191"
+  },
+  {
+    "log_id": "mod-8cda28b3",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-13\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-d7cd45d1",
+    "timestamp": "2026-08-05T17:31:35.770843"
+  },
+  {
+    "log_id": "mod-907754ea",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-14\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-05f2193f",
+    "timestamp": "2026-08-05T17:33:21.164151"
+  },
+  {
+    "log_id": "mod-1ddca084",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-14\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-b436124d",
+    "timestamp": "2026-08-05T17:33:21.383588"
+  }
+]

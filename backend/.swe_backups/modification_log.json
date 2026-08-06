@@ -1,0 +1,50 @@
+[
+  {
+    "log_id": "mod-10082c4a",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-15\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-c0bf1de6",
+    "timestamp": "2026-08-06T05:15:30.792202"
+  },
+  {
+    "log_id": "mod-6904f628",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-15\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-aa8de1da",
+    "timestamp": "2026-08-06T05:15:31.196205"
+  },
+  {
+    "log_id": "mod-1702a3fd",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-16\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-e872ad3b",
+    "timestamp": "2026-08-06T05:17:19.669993"
+  },
+  {
+    "log_id": "mod-4154d95c",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-16\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-25a990e7",
+    "timestamp": "2026-08-06T05:17:20.025897"
+  },
+  {
+    "log_id": "mod-3aae5c74",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-17\\test_patch_engine_and_rollback0\\target.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to target.py (39 bytes).",
+    "backup_id": "bak-6574b167",
+    "timestamp": "2026-08-06T05:19:12.640704"
+  },
+  {
+    "log_id": "mod-5d99a9eb",
+    "file_path": "C:\\Users\\Mallikarjun Gala\\AppData\\Local\\Temp\\pytest-of-Mallikarjun Gala\\pytest-17\\test_verification_pipeline_wit0\\code.py",
+    "action_type": "APPLY_PATCH",
+    "diff_summary": "Patch applied to code.py (21 bytes).",
+    "backup_id": "bak-342caaf4",
+    "timestamp": "2026-08-06T05:19:13.064396"
+  }
+]

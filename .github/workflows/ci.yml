@@ -1,0 +1,78 @@
+name: Continuous Integration Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  backend-test:
+    name: Backend Lint & Pytest
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: jarvis_admin
+          POSTGRES_PASSWORD: jarvis_secure_password
+          POSTGRES_DB: jarvis_os_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4.1.7
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5.0.0
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r backend/requirements.txt
+          pip install pytest pytest-asyncio pytest-cov ruff mypy
+
+      - name: Lint with Ruff
+        run: |
+          ruff check backend/app
+
+      - name: Run Backend Pytest Suite
+        env:
+          DATABASE_URL: postgresql+asyncpg://jarvis_admin:jarvis_secure_password@localhost:5432/jarvis_os_test
+          SECRET_KEY: test_secret_key_ci_pipeline_32_characters_minimum
+        run: |
+          pytest backend/tests/ tests/ -v --cov=backend/app --cov=jarvis
+
+
+  frontend-test:
+    name: Frontend Lint & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.1.7
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4.0.2
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package.json
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd frontend
+          npm ci
+
+      - name: Type Check & Build React App
+        run: |
+          cd frontend
+          npm run build

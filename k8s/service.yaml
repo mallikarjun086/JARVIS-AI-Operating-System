@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jarvis-backend-service
+  namespace: jarvis-system
+  labels:
+    app.kubernetes.io/name: jarvis-backend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8000
+      targetPort: 8000
+      protocol: TCP
+      name: http
+  selector:
+    app: jarvis-backend
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jarvis-frontend-service
+  namespace: jarvis-system
+  labels:
+    app.kubernetes.io/name: jarvis-frontend
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app: jarvis-frontend

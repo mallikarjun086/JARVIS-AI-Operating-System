@@ -1,0 +1,77 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jarvis-system
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jarvis-backend-deployment
+  namespace: jarvis-system
+
+  labels:
+    app.kubernetes.io/name: jarvis-backend
+    app.kubernetes.io/part-of: jarvis-ai-os
+    app.kubernetes.io/version: "1.0.0"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jarvis-backend
+  template:
+    metadata:
+      labels:
+        app: jarvis-backend
+    spec:
+      containers:
+        - name: backend
+          image: jarvis-backend:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http-api
+          env:
+            - name: ENV
+              value: "production"
+            - name: DEBUG
+              value: "false"
+            - name: PORT
+              value: "8000"
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: jarvis-secrets
+                  key: jwt-secret-key
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: jarvis-secrets
+                  key: database-url
+          resources:
+            requests:
+              memory: "512Mi"
+              cpu: "250m"
+            limits:
+              memory: "2Gi"
+              cpu: "1000m"
+          startupProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /api/v1/health
+              port: 8000
+            periodSeconds: 5
+            timeoutSeconds: 2
+            failureThreshold: 2
