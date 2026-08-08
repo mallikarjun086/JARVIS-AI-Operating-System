@@ -149,6 +149,16 @@ class ExecutionPlan(BaseModel):
     execution_graph: List[ExecutionBatch] = Field(default_factory=list, description="Parallel execution batch ordering")
     topological_order: List[str] = Field(default_factory=list, description="Flat sequential DAG order")
 
+    @property
+    def nodes(self) -> List[PlanTask]:
+        return self.subtasks
+
+
+    @property
+    def execution_batches(self) -> List[ExecutionBatch]:
+        return self.execution_graph
+
+
     state: ExecutionState = Field(default=ExecutionState.CREATED)
     policy: ExecutionPolicy = Field(default=ExecutionPolicy.FAIL_FAST)
     is_valid_dag: bool = True

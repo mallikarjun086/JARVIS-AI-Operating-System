@@ -125,6 +125,9 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         logger.warning("AI Providers shutdown notice", error=str(e))
 
 
+from fastapi.responses import JSONResponse
+from fastapi.requests import Request
+
 def create_application() -> FastAPI:
     """FastAPI Application Factory."""
     app = FastAPI(
@@ -139,11 +142,36 @@ def create_application() -> FastAPI:
     # CORS Configuration
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS,
+        allow_origins=settings.CORS_ORIGINS or ["*"],
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # Global Exception Handlers for Production Hardening
+    @app.exception_handler(PermissionError)
+    async def permission_error_handler(request: Request, exc: PermissionError):
+        logger.warning("Permission denied", path=request.url.path, error=str(exc))
+        return JSONResponse(
+            status_code=403,
+            content={"detail": str(exc) or "Permission denied by Security Engine."}
+        )
+
+    @app.exception_handler(ValueError)
+    async def value_error_handler(request: Request, exc: ValueError):
+        logger.warning("Value error in request", path=request.url.path, error=str(exc))
+        return JSONResponse(
+            status_code=400,
+            content={"detail": str(exc) or "Invalid request parameters."}
+        )
+
+    @app.exception_handler(Exception)
+    async def generic_exception_handler(request: Request, exc: Exception):
+        logger.error("Unhandled internal server error", path=request.url.path, error=str(exc))
+        return JSONResponse(
+            status_code=500,
+            content={"detail": "Internal Server Error: " + str(exc)}
+        )
 
     # Include Main API Router
     app.include_router(api_router)
@@ -152,3 +180,4 @@ def create_application() -> FastAPI:
 
 
 app = create_application()
+

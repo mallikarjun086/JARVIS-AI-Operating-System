@@ -45,13 +45,42 @@ class MockProvider(BaseLLMProvider):
     async def shutdown(self) -> None:
         pass
 
+    def _generate_smart_mock_content(self, request: LLMRequest) -> str:
+        """Generates realistic contextual mock content based on prompt inspection."""
+        last_user_msg = request.messages[-1].content if request.messages else ""
+        sys_prompt = (request.system_prompt or "").lower()
+        msg_lower = last_user_msg.lower()
+
+        if "plan" in sys_prompt or "plan" in msg_lower or "dag" in msg_lower or "decompose" in msg_lower:
+            return (
+                "1. Analyze target system requirements\n"
+                "2. Decompose architecture into parallel subcomponents\n"
+                "3. Execute implementation & validation pipeline\n"
+                "4. Verify quality criteria and consensus voting"
+            )
+        elif "code" in sys_prompt or "code" in msg_lower or "python" in msg_lower or "typescript" in msg_lower:
+            return (
+                "```python\n"
+                "# Autonomous Code Synthesis Output\n"
+                "def execute_task(task_input: str) -> dict:\n"
+                "    \"\"\"Synthesized production logic.\"\"\"\n"
+                "    return {'status': 'SUCCESS', 'result': f'Processed {task_input}'}\n"
+                "```"
+            )
+        elif "summarize" in sys_prompt or "research" in msg_lower or "doc" in msg_lower:
+            return (
+                "• Executive Summary: Autonomous platform operating normally.\n"
+                "• Core Subsystems: AI Router, Multi-Agent Swarm, Vector Memory, Tools verified.\n"
+                "• Next Steps: Proceeding with target workflow execution."
+            )
+
+        return f"JARVIS Kernel processed query: '{last_user_msg[:80]}'. All subsystems operational."
+
     async def generate_response(self, request: LLMRequest) -> LLMResponse:
         start_time = time.time()
-        await asyncio.sleep(0.05)
+        await asyncio.sleep(0.02)
 
-        last_user_msg = request.messages[-1].content if request.messages else "Hello"
-        content = f"[Mock AI Core Response] Received prompt: '{last_user_msg[:60]}...'. Execution successful."
-
+        content = self._generate_smart_mock_content(request)
         prompt_tokens = self.count_tokens(" ".join(m.content for m in request.messages))
         completion_tokens = self.count_tokens(content)
         total_tokens = prompt_tokens + completion_tokens
@@ -74,12 +103,11 @@ class MockProvider(BaseLLMProvider):
 
     async def stream_response(self, request: LLMRequest) -> AsyncIterator[LLMStreamChunk]:
         resp_id = f"stream-{uuid.uuid4().hex[:8]}"
-        last_user_msg = request.messages[-1].content if request.messages else "Hello"
-        full_text = f"[Mock Streaming AI Response] Echoing query: '{last_user_msg}'."
+        full_text = self._generate_smart_mock_content(request)
 
         words = full_text.split(" ")
         for idx, word in enumerate(words):
-            await asyncio.sleep(0.02)
+            await asyncio.sleep(0.01)
             chunk_text = word + (" " if idx < len(words) - 1 else "")
             yield LLMStreamChunk(
                 id=resp_id,
@@ -87,6 +115,7 @@ class MockProvider(BaseLLMProvider):
                 finish_reason="stop" if idx == len(words) - 1 else None,
                 model=request.model
             )
+
 
     async def generate_stream(self, request: LLMRequest) -> AsyncIterator[LLMStreamChunk]:
         async for chunk in self.stream_response(request):

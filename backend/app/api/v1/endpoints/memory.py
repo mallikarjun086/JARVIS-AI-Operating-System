@@ -208,3 +208,50 @@ async def purge_expired(
     """Executes garbage collection purging expired TTL memory records."""
     count = await maintenance_engine.cleanup_expired_memories(db)
     return {"message": f"Purged {count} expired memory records."}
+
+
+@router.post("/train-dataset", summary="Ingest & Train Vector Memory Dataset Batch")
+async def train_dataset(
+    payload: dict,
+    current_user: User = Depends(get_current_user)
+):
+    """
+    Ingests a batch of JSON/Text documents into ChromaDB vector store, computes embeddings,
+    and updates vector knowledge indices.
+    """
+    from app.memory.trainer import dataset_trainer
+    items = payload.get("items") or payload.get("documents") or []
+    category = payload.get("category", "LONG_TERM_EPISODIC")
+    importance = float(payload.get("importance_score", 0.8))
+
+    if not items and payload.get("content"):
+        items = [{"content": payload["content"], "title": payload.get("title", "Ingested Document")}]
+
+    res = await dataset_trainer.ingest_dataset_batch(items=items, category=category, importance_score=importance)
+    return res
+
+
+@router.post("/generate-fewshot", summary="Generate Synthetic Few-Shot Training Examples")
+async def generate_fewshot(
+    payload: dict,
+    current_user: User = Depends(get_current_user)
+):
+    """Generates synthetic Question/Answer few-shot dataset pairs for AI agent prompt tuning."""
+    from app.memory.trainer import dataset_trainer
+    topic = payload.get("topic", "JARVIS System Architecture")
+    count = int(payload.get("count", 5))
+
+    res = await dataset_trainer.generate_synthetic_fewshot_dataset(topic=topic, sample_count=count)
+    return res
+
+
+@router.get("/export-fine-tune", summary="Export Formatted Fine-Tuning JSONL Dataset")
+async def export_fine_tune(
+    limit: int = 50,
+    current_user: User = Depends(get_current_user)
+):
+    """Exports indexed vector memories and synthetic training pairs into OpenAI/Gemini JSONL format."""
+    from app.memory.trainer import dataset_trainer
+    res = await dataset_trainer.export_fine_tuning_jsonl(limit=limit)
+    return res
+

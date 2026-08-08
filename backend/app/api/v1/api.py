@@ -41,4 +41,6 @@ api_router.include_router(multi_agent.router, prefix="", tags=["Multi-Agent Swar
 api_router.include_router(vision.router, prefix="/vision", tags=["Computer Vision Subsystem"])
 api_router.include_router(voice.router, prefix="/voice", tags=["Voice Assistant Subsystem"])
 api_router.include_router(workflow.router, prefix="/workflow", tags=["Workflow Automation Subsystem"])
+api_router.include_router(workflow.router, prefix="/workflows", tags=["Workflow Automation Subsystem"])
 api_router.include_router(security.router, prefix="/security", tags=["Enterprise Security & Hardening"])
+

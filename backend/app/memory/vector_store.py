@@ -333,6 +333,61 @@ class ChromaVectorStore:
             logger.error("ChromaDB user vector erase failed", user_id=user_id, error=str(e))
             return 0
 
+    async def seed_from_dataset(self, dataset_path: str) -> int:
+        """
+        Seeds ChromaDB collection from a JSON dataset file if available.
+        Returns total number of items inserted.
+        """
+        import os
+        import json
+        if not os.path.exists(dataset_path):
+            logger.info("Dataset file not found for vector store seeding", path=dataset_path)
+            return 0
+
+        try:
+            with open(dataset_path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            if not isinstance(data, list) or not data:
+                return 0
+
+            doc_ids = []
+            vectors = []
+            documents = []
+            metadatas = []
+
+            for item in data:
+                doc_id = item.get("id") or str(uuid.uuid4())
+                content = item.get("content") or item.get("document") or ""
+                vector = item.get("vector") or item.get("embedding") or []
+                if not content or not vector:
+                    continue
+
+                meta = item.get("metadata", {})
+                if "memory_type" in item and "memory_type" not in meta:
+                    meta["memory_type"] = item["memory_type"]
+
+                doc_ids.append(doc_id)
+                vectors.append(vector)
+                documents.append(content)
+                metadatas.append(meta)
+
+            if doc_ids:
+                success = await self.add_batch(
+                    doc_ids=doc_ids,
+                    vectors=vectors,
+                    documents=documents,
+                    metadatas=metadatas
+                )
+                if success:
+                    logger.info("ChromaVectorStore seeded successfully from dataset", path=dataset_path, count=len(doc_ids))
+                    return len(doc_ids)
+
+            return 0
+        except Exception as e:
+            logger.error("Failed to seed ChromaVectorStore from dataset", path=dataset_path, error=str(e))
+            return 0
+
     def _sanitize_metadata(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
         """
         ChromaDB only accepts str, int, float, bool metadata values.
@@ -354,3 +409,4 @@ class ChromaVectorStore:
 
 # Module-level singleton
 chroma_store = ChromaVectorStore()
+

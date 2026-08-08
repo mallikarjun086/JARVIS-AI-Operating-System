@@ -50,7 +50,12 @@ class ExecutionEngine:
         self._pause_events: Dict[str, asyncio.Event] = {}  # {plan_id -> Event}
         self._cancel_flags: Dict[str, bool] = {}  # {plan_id -> bool}
 
+    async def create_plan(self, goal: str, **kwargs: Any) -> ExecutionPlan:
+        """Backward-compatible create_plan helper."""
+        return await self.create_and_validate_plan(goal=goal, **kwargs)
+
     async def create_and_validate_plan(
+
         self,
         req: Optional[PlannerRequest | str] = None,
         db: Optional[AsyncSession] = None,

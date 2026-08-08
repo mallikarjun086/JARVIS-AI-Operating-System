@@ -45,22 +45,16 @@ class WorkflowEngine:
 
     async def execute_workflow(
         self,
-        definition_id: str,
+        definition_id: Optional[str] = None,
+        template_id: Optional[str] = None,
         initial_vars: Optional[Dict] = None,
         user_context: Optional[Dict] = None
     ) -> WorkflowInstance:
-        """
-        Triggers workflow instance execution:
-        1. Retrieves blueprint from WorkflowLibrary.
-        2. Validates security policy via PolicyEngine.
-        3. Reserves compute resources via ResourceReservationManager.
-        4. Binds immutable VersionInfo via WorkflowVersioningEngine.
-        5. Emits WorkflowCreated and WorkflowValidated via EventSourcingEngine.
-        6. Delegates execution to WorkflowRuntime.
-        """
-        wf_def = workflow_library._definitions.get(definition_id)
+        def_id = definition_id or template_id or "tmpl-docs-gen"
+        wf_def = workflow_library._definitions.get(def_id)
         if not wf_def:
-            raise ValueError(f"Workflow definition '{definition_id}' not found.")
+            raise ValueError(f"Workflow definition '{def_id}' not found.")
+
 
         # 2. Policy Engine Security Check
         valid_policy = workflow_policy_engine.validate_workflow_policy(wf_def, user_context)

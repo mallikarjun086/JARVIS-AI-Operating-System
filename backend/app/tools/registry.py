@@ -87,6 +87,8 @@ class ToolRegistry:
         max_permission: PermissionLevel = PermissionLevel.ADMIN
     ) -> List[ToolMetadata]:
         """Lists metadata for registered tools filtered by category and max permission level."""
+        if not self._tools:
+            self.discover_tools()
         result = []
         for name, tool in self._tools.items():
             if tool.permission_level <= max_permission:
@@ -96,8 +98,16 @@ class ToolRegistry:
 
     def get_categories(self) -> List[str]:
         """Returns list of distinct registered tool categories."""
+        if not self._tools:
+            self.discover_tools()
         categories = set(t.category for t in self._tools.values())
         return sorted(list(categories))
+
+    def list_categories(self) -> List[str]:
+        """Alias for get_categories."""
+        return self.get_categories()
+
+
 
     def discover_tools(self, package_name: str = "app.tools.categories") -> int:
         """

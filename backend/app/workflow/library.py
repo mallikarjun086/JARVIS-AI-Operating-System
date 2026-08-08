@@ -58,4 +58,11 @@ class WorkflowLibrary:
         return False
 
 
+    def list_templates(self) -> List[WorkflowDefinition]:
+        """Lists workflow definition templates."""
+        return self.search_definitions("")
+
+
 workflow_library = WorkflowLibrary()
+template_library = workflow_library
+

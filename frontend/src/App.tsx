@@ -8,6 +8,7 @@ import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { AIChatPage } from './pages/AIChat';
 import { MemoryConsolePage } from './pages/MemoryConsole';
+import { DatasetTrainerConsolePage } from './pages/DatasetTrainerConsole';
 import { PlannerConsolePage } from './pages/PlannerConsole';
 import { ToolConsolePage } from './pages/ToolConsole';
 import { AutomationConsolePage } from './pages/AutomationConsole';
@@ -22,16 +23,19 @@ import { SettingsPage } from './pages/Settings';
 import { AuditLogsPage } from './pages/AuditLogs';
 
 const LayoutWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
   return (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
       <div className="main-content">
-        <Navbar />
+        <Navbar onToggleMobileMenu={() => setMobileMenuOpen(!mobileMenuOpen)} />
         <main className="page-body">{children}</main>
       </div>
     </div>
   );
 };
+
 
 export const App: React.FC = () => {
   return (
@@ -142,6 +146,14 @@ export const App: React.FC = () => {
               element={
                 <LayoutWrapper>
                   <MemoryConsolePage />
+                </LayoutWrapper>
+              }
+            />
+            <Route
+              path="/dataset-trainer"
+              element={
+                <LayoutWrapper>
+                  <DatasetTrainerConsolePage />
                 </LayoutWrapper>
               }
             />

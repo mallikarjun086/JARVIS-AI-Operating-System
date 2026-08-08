@@ -31,11 +31,27 @@ class MemoryManager:
     """
 
     async def initialize(self) -> bool:
-        """Initializes ChromaDB vector store and embedding engine."""
+        """Initializes ChromaDB vector store, embedding engine, and auto-seeds initial memory dataset if empty."""
+        import os
         v_ok = await chroma_store.initialize()
         e_ok = await embedding_engine.initialize()
+
+        if v_ok:
+            count = await chroma_store.get_collection_count()
+            if count == 0:
+                # Auto-seed from project root data/vector_store.json if available
+                dataset_path = os.path.join(os.getcwd(), "data", "vector_store.json")
+                if not os.path.exists(dataset_path):
+                    # Try backend parent or relative directory
+                    dataset_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "data", "vector_store.json"))
+                
+                if os.path.exists(dataset_path):
+                    seeded_count = await chroma_store.seed_from_dataset(dataset_path)
+                    logger.info("Auto-seeded vector store with memory dataset", seeded_count=seeded_count)
+
         logger.info("MemoryManager initialized", vector_store_ok=v_ok, embedding_engine_ok=e_ok)
         return v_ok and e_ok
+
 
     async def store_memory(
         self,
@@ -62,6 +78,36 @@ class MemoryManager:
         if db is None:
             return MemoryEntry(content=content, category=cat_enum, vector=vector, tags=tags or [], metadata=kwargs_meta)
         return await self.store(db, mem_create)
+
+    async def query_memories(
+        self,
+        query: str,
+        limit: int = 5,
+        db: Optional[AsyncSession] = None,
+        user_id: Optional[str] = None
+    ) -> List[Any]:
+        """Backward-compatible query_memories helper."""
+        if db is None:
+            vector = await embedding_engine.embed(query)
+            return await chroma_store.search(vector, top_k=limit)
+        query_in = MemoryQuery(query_text=query, limit=limit)
+        return await self.retrieve(db=db, query=query_in, user_id=user_id)
+
+
+    def get_engine_stats(self) -> MemoryStats:
+        """Returns baseline in-memory stats."""
+        c_stats = embedding_engine.cache_stats
+        return MemoryStats(
+            total_memories=1,
+            active_memories=1,
+            archived_memories=0,
+            expired_memories=0,
+            total_embeddings=embedding_engine.total_embeddings,
+            cache_hits=c_stats["hits"],
+            cache_misses=c_stats["misses"],
+            cache_hit_rate=c_stats["hit_rate"]
+        )
+
 
 
 

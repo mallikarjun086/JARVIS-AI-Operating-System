@@ -128,11 +128,13 @@ async def run_tests(
 
 
 @router.get("/history", response_model=List[CodeModificationLog], summary="Get Code Modification History")
+@router.get("/logs", response_model=List[CodeModificationLog], summary="Get Code Modification History Alias")
 async def get_modification_history(
     current_user: User = Depends(get_current_user)
 ) -> List[CodeModificationLog]:
     """Retrieves modification logs and backup audit trail."""
     return safety_backup_engine.list_modification_logs()
+
 
 
 @router.get("/metrics", summary="Get SWE Agent Telemetry Metrics")
