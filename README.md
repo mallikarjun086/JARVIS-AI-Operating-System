@@ -10,7 +10,7 @@
 ```
 
 # 🤖 JARVIS AI Operating System
-### *Enterprise Multi-Agent OS Kernel & Autonomous Swarm Platform*
+### *Enterprise Autonomous Multi-Agent AI OS Kernel & Live Task Automation Engine*
 
 [![Version](https://img.shields.io/badge/Version-1.0.0-blue.svg?style=for-the-badge&logo=semver)](https://github.com/mallikarjun086/JARVIS-AI-Operating-System)
 [![Python](https://img.shields.io/badge/Python-3.11%20%7C%203.12-3776AB.svg?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
@@ -27,45 +27,45 @@
 
 ## 📌 Executive Summary
 
-**JARVIS AI OS** is a production-grade, enterprise autonomous multi-agent Artificial Intelligence Operating System kernel. Built upon a decoupled **Clean Architecture**, JARVIS integrates a **10-specialized agent swarm**, a **Directed Acyclic Graph (DAG) task planner**, a **12-state microkernel workflow engine**, a **7-stage LLM provider router**, a **multi-tier ChromaDB vector memory**, **Playwright web browser and Windows desktop automation**, **computer vision**, **voice intelligence**, and a state-of-the-art **glassmorphic React web dashboard**.
+**JARVIS AI OS** is a production-grade, enterprise autonomous multi-agent Artificial Intelligence Operating System kernel. Built upon a decoupled **Clean Architecture**, JARVIS integrates a **10-specialized agent swarm**, a **Directed Acyclic Graph (DAG) task planner**, a **12-state microkernel workflow engine**, a **7-stage LLM provider router**, a **multi-tier ChromaDB RAG vector memory engine**, **Playwright web browser and Windows desktop automation**, **computer vision OCR**, **voice intelligence**, a **synthetic dataset trainer engine**, and a state-of-the-art **Compact Pro responsive dashboard** supporting 4K monitors, Windows desktops, tablets, and mobile devices.
 
 ---
 
-## 🏛️ System Architecture
+## 🏛️ Architecture Overview
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────────────────┐
-│                          React 18 / TypeScript Web Dashboard                           │
-│                       (Glassmorphic Dark UI & Real-Time SSE)                            │
+❚                    React 18 + TypeScript Compact Pro Dashboard                          ❚
+❚            (Universal Fluid Breakpoints: 4K, Desktop, Tablet, Mobile)                   ❚
 └───────────────────────────────────────────┬─────────────────────────────────────────────┘
                                             │ REST / SSE HTTP API
 ┌───────────────────────────────────────────▼─────────────────────────────────────────────┐
-│                            FastAPI OS Kernel Router v1                                  │
+❚                            FastAPI OS Kernel Router v1                                  ❚
 └───────────────────────────────────────────┬─────────────────────────────────────────────┘
                                             │
    ┌───────────────────┬────────────────────┼────────────────────┬───────────────────┐
    │                   │                    │                    │                   │
 ┌──▼─────────────┐  ┌──▼──────────────┐  ┌──▼────────────────┐  ┌──▼──────────────┐  ┌──▼──────────────┐
-│ 10-Agent Swarm │  │ Task Planner    │  │ 12-State Workflow │  │ 7-Stage LLM     │  │ Multi-Tier      │
+│ 10-Agent Swarm │  │ Task Planner    │  │ 12-State Workflow │  │ 7-Stage LLM     │  │ Multi-Tier RAG  │
 │ Orchestration  │  │ (DAG Kernel)    │  │ Microkernel       │  │ Provider Router │  │ Vector Memory   │
 └────────────────┘  └─────────────────┘  └───────────────────┘  └─────────────────┘  └─────────────────┘
 ```
 
 ---
 
-## 🚀 Key Modules & Capabilities
+## ⚡ Key Modules & Capabilities
 
 | Subsystem Module | Description & Architecture Highlights |
 | :--- | :--- |
-| **🐝 10-Agent Swarm** | Specialized agents (`Coordinator`, `Planner`, `Research`, `Browser`, `Desktop`, `Coding`, `Memory`, `Vision`, `Voice`, `Verifier`) linked via inter-agent message bus & consensus voting. |
+| **🐝 10-Agent Swarm** | Specialized agents (`Planner`, `Research`, `Browser`, `Desktop`, `Coding`, `Memory`, `Vision`, `Voice`, `Coordinator`, `Verifier`) linked via inter-agent message bus & consensus voting. |
+| **⚡ Task Automation Engine** | Interactive 4-step execution timeline (*Deep Research ➔ AST Code Synthesis ➔ ChromaDB Vector Indexing ➔ Quality Verifier Consensus Gate*) with step progress timers and live code output. |
+| **🧠 Vector Memory RAG & Trainer** | Multi-tier ChromaDB memory engine with automatic dataset auto-seeding (`data/vector_store.json`), synthetic QA generator, and JSONL fine-tuning exporter. |
 | **🗺️ DAG Task Planner** | Natural language intent decomposer using Kahn's topological sorting algorithm for parallel task batching and priority recovery. |
 | **🔄 Workflow Microkernel** | 12-State execution machine (`CREATED` ➔ `RUNNING` ➔ `COMPLETED`) with automated step-by-step saga rollback compensation on error. |
 | **🤖 7-Stage LLM Router** | Smart pipeline (Health ➔ Capability ➔ Cost ➔ Priority ➔ Dispatch ➔ Retry ➔ Fallback) across OpenAI, Gemini, Claude, and MockProvider. |
-| **🧠 Vector Memory Store** | Multi-tier episodic and semantic storage backed by ChromaDB vector embeddings and multi-factor relevance ranking. |
-| **🌐 Browser Automation** | Playwright async engine supporting Chromium/Firefox, element interaction, tab management, screenshots, and human safety approval. |
-| **🖥️ OS Desktop Engine** | Windows High-DPI scaling process manager, window handle tracking, desktop input queues, and Tesseract OCR. |
-| **👁️ Vision & Voice AI** | Speech-to-Text (STT), Text-to-Speech (TTS), Voice Activity Detection (VAD), visual bounding box detection, and UI clickability scoring. |
-| **🔒 Enterprise Security** | JWT HS256 authentication, Bcrypt password hashing, administrator RBAC routes, and encrypted secret key vault storage. |
+| **🛠️ 11-Tool System Framework** | 35 registered tools across 11 functional categories with RBAC guards, Pydantic validation, timeouts, retries, and hot-reload engine. |
+| **🌐 Browser & Desktop Engine** | Playwright async engine supporting Chromium/Firefox, element interaction, window handle tracking, desktop input queues, and OCR text extraction. |
+| **🎨 Compact Pro UI** | High-density glassmorphism design system (`14px` root font, 230px slim sidebar, 54px navbar) with off-canvas sliding mobile drawer navigation. |
 
 ---
 
@@ -76,53 +76,63 @@
 3. **🔎 Research Agent**: Scrapes web docs, extracts knowledge items, and summarizes technical specs.
 4. **🌐 Browser Agent**: Executes headless Playwright automation (form input, web navigation, downloads).
 5. **🖥️ Desktop Agent**: Interacts with native OS desktop windows, OCR text recognition, and mouse/keyboard events.
-6. **💻 Coding Agent**: Autonomous software engineering, AST analysis, and automated code generation.
-7. **🧠 Memory Agent**: Stores, retrieves, and compresses short-term and long-term vector context.
+6. **💻 Coding Agent**: Autonomous software engineering, AST analysis, patch creation, and code generation.
+7. **🧠 Memory Agent**: Stores, retrieves, and compresses short-term and long-term vector context in ChromaDB.
 8. **👁️ Vision Agent**: UI component bounding box parser and visual layout clickability scoring.
 9. **🎙️ Voice Agent**: Handles STT speech recognition, TTS voice synthesis, and speaker profiling.
 10. **🛡️ Verifier Agent**: Quality gate gatekeeper verifying execution outputs against acceptance criteria.
 
 ---
 
-## 📁 Repository Directory Structure
+## 📱 Universal Responsive Breakpoints Matrix
+
+| Viewport Category | Screen Width | Layout & Reflow Behavior | Status |
+| :--- | :--- | :--- | :--- |
+| **4K Ultra-Wide** | `>= 1920px` | 4-column HUD cards, expanded `1920px` container, centered high-density grid | `✓ VERIFIED` |
+| **Windows Desktop** | `1280px` – `1919px` | 4-column HUD cards, 2-column side-by-side console splits | `✓ VERIFIED` |
+| **Tablet & Laptop** | `768px` – `1279px` | 2-column reflow, off-canvas sliding sidebar drawer with hamburger toggle | `✓ VERIFIED` |
+| **Mobile Smartphone** | `< 768px` | Single-column card stacking (`1fr`), full-width form inputs, touch drawer overlay | `✓ VERIFIED` |
+
+---
+
+## 📁 Directory Structure
 
 ```text
 JARVIS AI Operating System/
 ├── backend/                  # FastAPI Application Kernel
 │   ├── alembic/              # Database schema migrations
 │   ├── app/
-│   │   ├── ai/               # 7-stage LLM router, provider SDKs, prompts
-│   │   ├── api/              # 16 v1 REST API endpoint routers & deps
+│   │   ├── ai/               # 7-stage LLM router, provider SDKs, prompts, mock provider
+│   │   ├── api/              # 16 v1 REST API endpoint routers & dependencies
 │   │   ├── automation/       # Automation controller
 │   │   ├── browser/          # Playwright browser manager & safety gatekeeper
 │   │   ├── core/             # Event bus, logging, health manager, telemetry
 │   │   ├── db/               # SQLAlchemy async engine, session, initial seeders
 │   │   ├── desktop/          # Windows DPI, window manager, OCR, input queue
-│   │   ├── memory/           # ChromaDB vector store, RAG, compression, ranking
+│   │   ├── memory/           # ChromaDB vector store, RAG, dataset trainer engine
 │   │   ├── models/           # SQLAlchemy ORM models (User, Memory, Workflow)
 │   │   ├── multi_agent/      # 10-Agent swarm pool, message bus, capability graph
 │   │   ├── planner/          # DAG graph engine, intent decomposer, state machine
 │   │   ├── schemas/          # Pydantic v2 schemas
-│   │   ├── security/         # JWT auth, audit logging, RBAC, vault
+│   │   ├── security/         # JWT auth, audit logging, RBAC, secret vault
 │   │   ├── swe_agent/        # AST engine, patch engine, build manager
 │   │   ├── tools/            # Enterprise Tool Registry across 11 categories
 │   │   ├── vision/           # Computer vision bounding box & clickability scoring
 │   │   ├── voice/            # Speech-to-Text, Text-to-Speech, VAD
 │   │   └── workflow/         # 12-state workflow engine & saga compensation
-│   ├── tests/                # Pytest unit & integration test suite (174 tests)
+│   ├── tests/                # Automated pytest suite (174 unit tests + pro tester suite)
 │   ├── Dockerfile            # Multi-stage Python 3.11 slim backend image
 │   └── requirements.txt      # Backend Python dependencies
 ├── frontend/                 # React 18 + TypeScript + Vite Dashboard
 │   ├── src/
 │   │   ├── components/       # ProtectedRoute, Navbar, Sidebar
 │   │   ├── context/          # AuthContext provider
-│   │   ├── pages/            # 16 Console Pages (AIChat, MultiAgent, Planner, etc.)
+│   │   ├── pages/            # 16 Console Pages (Dashboard, DatasetTrainer, ToolConsole, etc.)
 │   │   ├── services/         # Axios API client interceptors
-│   │   └── index.css         # Glassmorphism dark mode CSS design system
+│   │   └── index.css         # Compact Pro design system & universal media queries
 │   ├── Dockerfile            # Multi-stage Node 20 builder -> Nginx runner
 │   └── package.json          # Frontend dependencies & build scripts
-├── k8s/                      # Kubernetes deployment, service & HPA manifests
-├── .github/workflows/        # GitHub Actions CI/CD matrix pipeline (ci.yml)
+├── data/                     # Vector store auto-seeding dataset (vector_store.json)
 ├── docker-compose.yml        # Docker Compose stack (PostgreSQL + Backend + Frontend)
 └── pyproject.toml            # Project setup & pytest config
 ```
@@ -186,38 +196,33 @@ docker-compose up --build -d
 
 ---
 
-## 🔐 Default Administrator Login
+## 🔐 Default Operator Credentials
 
 | Parameter | Value |
 | :--- | :--- |
-| **Email** | `admin@jarvis.ai` |
-| **Password** | `admin12345` |
+| **Operator Email** | `operator@jarvis.ai` |
+| **Password** | `SecurePass123!` |
+| **Superuser Admin Email** | `admin@jarvis.ai` |
+| **Admin Password** | `admin12345` |
 | **API Base URL** | `http://localhost:8000/api/v1` |
 
 ---
 
-## 🧪 Testing & Quality Assurance
+## 🧪 Testing & Automated Verification
 
-Run the complete Pytest suite (174 unit and integration tests passing):
+Execute the complete automated testing suite across all 9 kernel subsystems:
 
 ```powershell
 cd backend
-pytest tests/ -v
+python -m pytest tests/ -v
+python test_pro_tester_suite.py
 ```
-
----
-
-## 🔄 CI/CD Pipeline
-
-The repository includes an optimized GitHub Actions matrix pipeline (`.github/workflows/ci.yml`):
-- **Backend Job**: Python 3.11, PostgreSQL service container, Ruff linting, Pytest execution with coverage.
-- **Frontend Job**: Node.js 20, dependency caching, TypeScript compilation, and production Vite build.
 
 ---
 
 ## 👤 Author & Maintainer
 
-Developed and maintained exclusively by:
+Developed and maintained by:
 - **Mallikarjun Gala** ([@mallikarjun086](https://github.com/mallikarjun086))
 
 ---
