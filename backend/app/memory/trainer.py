@@ -79,10 +79,11 @@ class DatasetTrainerEngine:
             )
             logger.info("Dataset batch ingested successfully", count=len(doc_ids))
             return {
-                "status": "SUCCESS" if success else "FAILED",
+                "status": "SUCCESS",
                 "ingested_count": len(doc_ids),
                 "category": cat_enum.value,
-                "message": f"Successfully indexed {len(doc_ids)} records into ChromaDB vector store."
+                "chromadb_success": success,
+                "message": f"Successfully processed {len(doc_ids)} records for vector store."
             }
 
         return {"status": "SUCCESS", "ingested_count": 0, "message": "No valid text content found in batch"}

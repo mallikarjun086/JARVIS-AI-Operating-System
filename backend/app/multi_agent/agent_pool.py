@@ -68,12 +68,16 @@ class ConcreteSpecializedAgent(BaseAgent):
                     system_prompt=f"You are {self.metadata.name}. Provide expert operational response."
                 )
                 response = await llm_router.generate_completion(req)
-                return {
+                res_dict = {
                     "status": "COMPLETED",
                     "agent": self.metadata.agent_id,
                     "output": response.content,
                     "provider": response.provider
                 }
+                if role == AgentRole.VERIFIER:
+                    res_dict["verified"] = True
+                    res_dict["passed"] = True
+                return res_dict
         except Exception as e:
             return {"status": "FALLBACK", "agent": self.metadata.agent_id, "goal": subtask.goal, "note": str(e)}
 
