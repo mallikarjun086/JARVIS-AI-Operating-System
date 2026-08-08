@@ -316,7 +316,7 @@ async def create_order(payload: OrderPayload):
                   borderRadius: '10px',
                   padding: '0.85rem 1.15rem',
                   display: 'flex',
-                  justify: 'space-between',
+                  justifyContent: 'space-between',
                   alignItems: 'center',
                   transition: 'all 0.2s ease'
                 }}

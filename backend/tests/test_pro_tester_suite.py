@@ -63,9 +63,9 @@ async def test_pro_tester_specialized_agents():
     m_res = await memory_agent.execute_task(mem_sub)
     p_res = await planner_agent.execute_task(plan_sub)
 
-    assert c_res.status.value == "COMPLETED"
-    assert m_res.status.value == "COMPLETED"
-    assert p_res.status.value == "COMPLETED"
+    assert getattr(c_res.status, "value", str(c_res.status)) == "COMPLETED"
+    assert getattr(m_res.status, "value", str(m_res.status)) == "COMPLETED"
+    assert getattr(p_res.status, "value", str(p_res.status)) == "COMPLETED"
 
 
 @pytest.mark.asyncio
