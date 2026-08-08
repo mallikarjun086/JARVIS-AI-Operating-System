@@ -1,11 +1,19 @@
-version: "3.8"
+version: "3.9"
+
+name: jarvis-ai-os
+
+# ─────────────────────────────────────────────────────────────────
+#  JARVIS AI Operating System — Production Docker Compose
+#  Services: PostgreSQL | Redis | FastAPI Backend | React Frontend (Nginx)
+# ─────────────────────────────────────────────────────────────────
 
 services:
-  # 1. PostgreSQL Database Service
+
+  # ── 1. PostgreSQL 16 — Primary Database ──────────────────────
   db:
     image: postgres:16-alpine
     container_name: jarvis_postgres
-    restart: always
+    restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-jarvis_admin}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-jarvis_secure_password}
@@ -18,44 +26,96 @@ services:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-jarvis_admin} -d ${POSTGRES_DB:-jarvis_os}"]
       interval: 5s
       timeout: 5s
-      retries: 5
+      retries: 10
+      start_period: 10s
+    networks:
+      - jarvis_net
 
-  # 2. FastAPI Backend Service
+  # ── 2. Redis — Session Cache & Event Queue ────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: jarvis_redis
+    restart: unless-stopped
+    command: redis-server --maxmemory 256mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - jarvis_net
+
+  # ── 3. FastAPI Backend ─────────────────────────────────────────
   backend:
     build:
       context: ./backend
       dockerfile: Dockerfile
+      target: production
     container_name: jarvis_backend
-    restart: always
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
-      - ENV=production
-      - DEBUG=false
-      - PORT=8000
-      - HOST=0.0.0.0
-      - SECRET_KEY=${SECRET_KEY:-jarvis_super_secret_jwt_key_change_in_production_min_32_chars!}
-      - DATABASE_URL=postgresql+asyncpg://${POSTGRES_USER:-jarvis_admin}:${POSTGRES_PASSWORD:-jarvis_secure_password}@db:5432/${POSTGRES_DB:-jarvis_os}
+      ENV: production
+      DEBUG: "false"
+      PORT: "8000"
+      HOST: "0.0.0.0"
+      SECRET_KEY: ${SECRET_KEY:-CHANGE_ME_IN_PRODUCTION_USE_64_CHAR_RANDOM_SECRET}
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-jarvis_admin}:${POSTGRES_PASSWORD:-jarvis_secure_password}@db:5432/${POSTGRES_DB:-jarvis_os}
+      REDIS_URL: redis://redis:6379/0
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}
+      CORS_ORIGINS: "http://localhost:3000,http://localhost:5173"
     ports:
       - "8000:8000"
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/v1/health || exit 1"]
-      interval: 10s
+      test: ["CMD-SHELL", "curl -sf http://localhost:8000/api/v1/health || exit 1"]
+      interval: 15s
       timeout: 5s
-      retries: 3
+      retries: 5
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    networks:
+      - jarvis_net
 
-  # 3. React Frontend Service (Nginx Web Server)
+  # ── 4. React Frontend (Nginx) ──────────────────────────────────
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: jarvis_frontend
-    restart: always
+    restart: unless-stopped
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
     ports:
       - "3000:80"
+    networks:
+      - jarvis_net
 
+# ── Persistent Volumes ─────────────────────────────────────────
 volumes:
   postgres_data:
+    name: jarvis_postgres_data
+
+# ── Networks ───────────────────────────────────────────────────
+networks:
+  jarvis_net:
+    name: jarvis_network
+    driver: bridge

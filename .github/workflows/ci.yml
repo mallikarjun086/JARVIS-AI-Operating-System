@@ -1,4 +1,4 @@
-name: Continuous Integration Pipeline
+name: JARVIS AI OS — Continuous Integration Pipeline
 
 on:
   push:
@@ -6,58 +6,176 @@ on:
   pull_request:
     branches: [main, develop]
 
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "20"
+  REGISTRY: ghcr.io
+
 jobs:
-  backend-test:
-    name: Backend Lint & Pytest Suite
+  # ─────────────────────────────────────────────
+  # JOB 1: Backend Lint, Security Scan & Pytest
+  # ─────────────────────────────────────────────
+  backend:
+    name: Backend Lint, Security & Pytest Suite
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.11
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v5
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - name: Install Core Backend Dependencies
+      - name: Install Backend Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --prefer-binary --no-cache-dir fastapi uvicorn pydantic pydantic-settings email-validator sqlalchemy aiosqlite python-jose passlib bcrypt python-multipart structlog httpx Pillow cryptography openai anthropic google-generativeai tiktoken pytest pytest-asyncio pytest-cov ruff mypy
+          pip install --prefer-binary --no-cache-dir \
+            fastapi uvicorn pydantic pydantic-settings email-validator \
+            sqlalchemy aiosqlite python-jose passlib bcrypt python-multipart \
+            structlog httpx Pillow cryptography \
+            openai anthropic google-generativeai tiktoken \
+            starlette \
+            pytest pytest-asyncio pytest-cov anyio \
+            ruff bandit safety
 
-      - name: Lint with Ruff
+      - name: Ruff Lint Check
         run: |
-          ruff check backend/app || true
+          ruff check backend/app --output-format=github || true
 
-      - name: Run Backend Pytest Suite
+      - name: Bandit Security Scan
+        run: |
+          bandit -r backend/app -ll -q --exclude backend/app/__pycache__ || true
+
+      - name: Run Full Backend Pytest Suite (180+ tests)
         env:
           PYTHONPATH: backend
-          SECRET_KEY: test_secret_key_ci_pipeline_32_characters_minimum
+          SECRET_KEY: test_secret_key_ci_pipeline_32_characters_minimum_safe
+          DATABASE_URL: ""
         run: |
-          pytest backend/tests/ -v --cov=backend/app
+          pytest backend/tests/ -v --cov=backend/app --cov-report=term-missing --tb=short
 
-  frontend-test:
-    name: Frontend Lint & Build
+      - name: Upload Coverage Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage-report
+          path: .coverage
+          retention-days: 7
+
+  # ─────────────────────────────────────────────
+  # JOB 2: Frontend TypeScript & Build
+  # ─────────────────────────────────────────────
+  frontend:
+    name: Frontend TypeScript Check & Vite Build
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js 20
+      - name: Set up Node.js ${{ env.NODE_VERSION }}
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install Frontend Dependencies
         working-directory: ./frontend
-        run: |
-          npm ci || npm install
+        run: npm ci || npm install
 
-      - name: Type Check & Build React App
+      - name: TypeScript Strict Type Check
         working-directory: ./frontend
+        run: npx tsc --noEmit
+
+      - name: Production Build (Vite)
+        working-directory: ./frontend
+        run: npm run build
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: frontend/dist/
+          retention-days: 7
+
+  # ─────────────────────────────────────────────
+  # JOB 3: Docker Build Validation
+  # ─────────────────────────────────────────────
+  docker-validate:
+    name: Docker Build Validation
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Validate docker-compose syntax
+        run: docker compose config --quiet
+
+      - name: Build Backend Docker Image (validation only)
+        uses: docker/build-push-action@v5
+        with:
+          context: ./backend
+          push: false
+          tags: jarvis-backend:ci-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # ─────────────────────────────────────────────
+  # JOB 4: Kubernetes Manifest Validation
+  # ─────────────────────────────────────────────
+  k8s-validate:
+    name: Kubernetes Manifest Validation
+    runs-on: ubuntu-latest
+    needs: [backend]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install kubeval
         run: |
-          npm run build
+          wget https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz -q
+          tar xf kubeval-linux-amd64.tar.gz
+          sudo mv kubeval /usr/local/bin
+        continue-on-error: true
+
+      - name: Validate k8s manifests
+        run: |
+          if command -v kubeval &> /dev/null; then
+            find k8s/ -name "*.yaml" | xargs kubeval --ignore-missing-schemas || true
+          else
+            echo "kubeval not available, skipping k8s validation"
+          fi
+        continue-on-error: true
+
+  # ─────────────────────────────────────────────
+  # JOB 5: Release Summary
+  # ─────────────────────────────────────────────
+  release-summary:
+    name: Release Summary
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    if: always()
+
+    steps:
+      - name: Summary
+        run: |
+          echo "## JARVIS AI OS v1.0 — CI Pipeline Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Job | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Backend Tests | ${{ needs.backend.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Frontend Build | ${{ needs.frontend.result }} |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Commit: \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "Branch: \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY

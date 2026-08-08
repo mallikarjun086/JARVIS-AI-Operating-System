@@ -613,6 +613,71 @@ body {
   }
 }
 
+/* ── Spinner Keyframe ── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 0.9s linear infinite;
+  display: inline-block;
+}
 
+/* ── JARVIS Command Center: responsive 2-col -> 1-col ── */
+@media (max-width: 900px) {
+  .jarvis-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .jarvis-grid > .panel {
+    height: 480px !important;
+  }
+}
 
+/* ── Toast / Modal Animations ── */
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(12px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* ── Page Body Layout ── */
+.page-body {
+  padding: 1.25rem 1.75rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* ── Main Content Layout Fix ── */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── Mobile Toggle Button ── */
+.mobile-toggle-btn {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 0.35rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .mobile-toggle-btn { display: flex; }
+  .page-body { padding: 1rem; }
+}

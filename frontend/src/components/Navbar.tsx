@@ -4,9 +4,10 @@ import { LogOut, Search, Activity, Cpu, Menu } from 'lucide-react';
 
 interface NavbarProps {
   onToggleMobileMenu?: () => void;
+  onOpenCommandPalette?: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
+export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu, onOpenCommandPalette }) => {
   const { user, logout } = useAuth();
 
   return (
@@ -34,18 +35,25 @@ export const Navbar: React.FC<NavbarProps> = ({ onToggleMobileMenu }) => {
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '0.5rem',
-          background: 'rgba(15, 23, 42, 0.7)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '8px',
-          padding: '0.35rem 0.85rem',
-          fontSize: '0.8rem',
-          color: 'var(--text-dim)',
-          cursor: 'pointer'
-        }}>
+        <div
+          onClick={onOpenCommandPalette}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            background: 'rgba(15, 23, 42, 0.7)',
+            border: '1px solid var(--border-color)',
+            borderRadius: '8px',
+            padding: '0.35rem 0.85rem',
+            fontSize: '0.8rem',
+            color: 'var(--text-dim)',
+            cursor: 'pointer',
+            transition: 'all 0.2s',
+          }}
+          title="Open Command Palette (Ctrl+K)"
+          onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(56,189,248,0.4)')}
+          onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--border-color)')}
+        >
           <Search size={14} />
           <span>Quick Command...</span>
           <kbd style={{ background: 'rgba(255, 255, 255, 0.08)', padding: '0.1rem 0.35rem', borderRadius: '4px', fontSize: '0.7rem', color: 'var(--text-muted)' }}>Ctrl + K</kbd>

@@ -10,7 +10,9 @@ from app.api.v1.endpoints import (
     browser,
     desktop,
     health,
+    jarvis,
     memory,
+    metrics,
     multi_agent,
     planner,
     security,
@@ -24,6 +26,8 @@ from app.api.v1.endpoints import (
 
 api_router = APIRouter(prefix="/api/v1")
 
+api_router.include_router(jarvis.router, prefix="/jarvis", tags=["JARVIS Multimodal Orchestration"])
+api_router.include_router(metrics.router, tags=["Observability"])
 api_router.include_router(health.router, tags=["System Health"])
 api_router.include_router(auth.router, prefix="/auth", tags=["Authentication"])
 api_router.include_router(users.router, prefix="/users", tags=["User Management"])

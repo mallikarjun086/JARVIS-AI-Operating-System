@@ -36,6 +36,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isOpen = false, onClose }) => 
 
         <nav className="nav-menu">
           <div className="nav-section-label">⚡ Core System</div>
+          <NavLink to="/jarvis-command-center" onClick={handleNavClick} className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} style={{ background: 'linear-gradient(135deg, rgba(0, 242, 254, 0.18), rgba(139, 92, 246, 0.12))', border: '1px solid rgba(0, 242, 254, 0.3)' }}>
+            <Bot size={17} color="#00f2fe" />
+            <span style={{ color: '#00f2fe', fontWeight: 700 }}>JARVIS Command Center</span>
+          </NavLink>
           <NavLink to="/dashboard" onClick={handleNavClick} className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}>
             <LayoutDashboard size={17} />
             <span>Dashboard</span>

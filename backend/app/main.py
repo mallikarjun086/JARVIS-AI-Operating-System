@@ -2,10 +2,13 @@
 FastAPI Application Entry Point & Lifespan Service Initializer.
 """
 
+import uuid
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.responses import Response
 from app.api.v1.api import api_router
 from app.config import settings
 from app.core.logging import logger
@@ -93,6 +96,11 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     except Exception as e:
         logger.warning("Event Bus Kernel initialization warning", error=str(e))
 
+    # Startup security validation
+    sec_warnings = settings.validate_production_security()
+    for w in sec_warnings:
+        logger.warning("SECURITY CONFIGURATION ALERT", message=w)
+
     logger.info("Unified AI Operating System Platform Initialized Successfully", app_name=settings.APP_NAME)
     yield
 
@@ -128,6 +136,30 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 from fastapi.responses import JSONResponse
 from fastapi.requests import Request
 
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    """Injects production-grade security headers on every response."""
+    async def dispatch(self, request: Request, call_next) -> Response:
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["X-XSS-Protection"] = "1; mode=block"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+        if settings.is_production():
+            response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+        return response
+
+
+class RequestCorrelationMiddleware(BaseHTTPMiddleware):
+    """Adds X-Request-ID correlation header for distributed tracing."""
+    async def dispatch(self, request: Request, call_next) -> Response:
+        request_id = request.headers.get("X-Request-ID") or str(uuid.uuid4())[:8]
+        response = await call_next(request)
+        response.headers["X-Request-ID"] = request_id
+        return response
+
+
 def create_application() -> FastAPI:
     """FastAPI Application Factory."""
     app = FastAPI(
@@ -139,12 +171,16 @@ def create_application() -> FastAPI:
         lifespan=lifespan
     )
 
+    # Security Headers (Phase 4 hardening)
+    app.add_middleware(SecurityHeadersMiddleware)
+    app.add_middleware(RequestCorrelationMiddleware)
+
     # CORS Configuration
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.CORS_ORIGINS or ["*"],
+        allow_origins=settings.CORS_ORIGINS or ["http://localhost:3000"],
         allow_credentials=True,
-        allow_methods=["*"],
+        allow_methods=["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
         allow_headers=["*"],
     )
 

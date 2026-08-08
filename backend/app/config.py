@@ -81,6 +81,21 @@ class Settings(BaseSettings):
     MEMORY_MIN_IMPORTANCE: float = Field(default=0.3, description="Minimum importance threshold for retrieval")
     MEMORY_COMPRESSION_THRESHOLD: int = Field(default=10, description="Min turns before conversation compression")
 
+    # Rate Limiting
+    RATE_LIMIT_REQUESTS: int = Field(default=200, description="Max requests per minute per IP")
+    RATE_LIMIT_ENABLED: bool = Field(default=True, description="Enable rate limiting middleware")
+
+    # JARVIS Command Center Settings
+    JARVIS_MAX_SESSION_HISTORY: int = Field(default=20, description="Max conversation turns per session")
+    JARVIS_APPROVAL_TIMEOUT_SECONDS: int = Field(default=300, description="Approval gate timeout")
+    JARVIS_MAX_CONCURRENT_EXECUTIONS: int = Field(default=5, description="Max parallel task executions")
+
+    # Feature Flags
+    ENABLE_VOICE_STT: bool = Field(default=True)
+    ENABLE_VOICE_TTS: bool = Field(default=True)
+    ENABLE_BROWSER_AUTOMATION: bool = Field(default=True)
+    ENABLE_DESKTOP_AUTOMATION: bool = Field(default=False, description="Disabled by default — requires pyautogui")
+
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
     def parse_cors_origins(cls, v: str | List[str]) -> List[str]:
@@ -97,14 +112,19 @@ class Settings(BaseSettings):
         warnings: List[str] = []
         if self.is_production() and "change_in_production" in self.SECRET_KEY:
             warnings.append("CRITICAL: Default development SECRET_KEY is active in production environment.")
+        if self.is_production() and self.DEBUG:
+            warnings.append("WARNING: DEBUG mode is enabled in production environment.")
         return warnings
 
-
     def get_async_database_url(self) -> str:
-        """Returns PostgreSQL URL if set, otherwise fallback SQLite."""
+        """Returns the async database URL — PostgreSQL if configured, else SQLite fallback."""
         if self.DATABASE_URL:
-            return self.DATABASE_URL
-        return f"postgresql+asyncpg://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}:{self.POSTGRES_PORT}/{self.POSTGRES_DB}"
+            url = self.DATABASE_URL
+            # Ensure asyncpg driver for postgres
+            if url.startswith("postgresql://"):
+                url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+            return url
+        return self.SQLITE_FALLBACK_URL
 
 
 settings = Settings()
