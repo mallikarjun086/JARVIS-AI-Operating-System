@@ -102,17 +102,15 @@ export const JarvisCommandCenterPage: React.FC = () => {
 
   const chatBottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const recognitionRef = useRef<any>(null);
   // Stable ref so STT callback always calls the latest dispatch
   const dispatchRef = useRef<(cmd?: string, isVoice?: boolean) => void>(() => {});
 
   /* ── Speech Recognition Init ── */
   useEffect(() => {
     const SpeechRecognitionAPI =
-      (window as unknown as { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition })
-        .SpeechRecognition ||
-      (window as unknown as { SpeechRecognition?: typeof SpeechRecognition; webkitSpeechRecognition?: typeof SpeechRecognition })
-        .webkitSpeechRecognition;
+      (window as any).SpeechRecognition ||
+      (window as any).webkitSpeechRecognition;
 
     if (!SpeechRecognitionAPI) return;
     const rec = new SpeechRecognitionAPI();
@@ -120,7 +118,7 @@ export const JarvisCommandCenterPage: React.FC = () => {
     rec.interimResults = false;
     rec.lang = 'en-US';
 
-    rec.onresult = (event: SpeechRecognitionEvent) => {
+    rec.onresult = (event: any) => {
       const transcript = event.results[0][0].transcript;
       setIsListening(false);
       setInputText('');
