@@ -46,3 +46,4 @@ ENV/
 .pytest_cache/
 .coverage
 htmlcov/
+.swe_backups/

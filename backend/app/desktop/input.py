@@ -17,6 +17,9 @@ class InputEngine:
 
     def move_mouse(self, x: int, y: int) -> Tuple[int, int]:
         """Moves cursor to (x, y)."""
+        # Ensure screen bounds safety (0..3840, 0..2160)
+        x = max(0, min(3840, x))
+        y = max(0, min(2160, y))
         windows_adapter.move_cursor(x, y)
         self._current_mouse_pos = (x, y)
         return self._current_mouse_pos
@@ -37,11 +40,20 @@ class InputEngine:
     def drag_and_drop(self, start_x: int, start_y: int, end_x: int, end_y: int) -> Dict[str, Any]:
         """Performs drag and drop from (start_x, start_y) to (end_x, end_y)."""
         self.move_mouse(start_x, start_y)
-        self.move_mouse(end_x, end_y)
+        try:
+            import pyautogui
+            pyautogui.dragTo(end_x, end_y, duration=0.3)
+        except Exception:
+            self.move_mouse(end_x, end_y)
         return {"start": (start_x, start_y), "end": (end_x, end_y)}
 
     def scroll(self, delta: int) -> Dict[str, Any]:
         """Performs mouse wheel scroll."""
+        try:
+            import pyautogui
+            pyautogui.scroll(delta)
+        except Exception:
+            pass
         return {"delta": delta, "position": self._current_mouse_pos}
 
     def type_text(self, text: str) -> Dict[str, Any]:
@@ -51,6 +63,12 @@ class InputEngine:
 
     def send_hotkey(self, key_combination: str) -> Dict[str, Any]:
         """Sends key combination (e.g. 'Ctrl+C', 'Alt+Tab')."""
+        try:
+            import pyautogui
+            keys = [k.strip().lower() for k in key_combination.split("+")]
+            pyautogui.hotkey(*keys)
+        except Exception:
+            pass
         return {"key_combination": key_combination}
 
 

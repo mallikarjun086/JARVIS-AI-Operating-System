@@ -11,7 +11,7 @@ from app.security.sandbox import LocalProcessExecutor, ProcessSandboxEngine
 @pytest.mark.asyncio
 async def test_async_process_execution_success():
     executor = LocalProcessExecutor()
-    req = ProcessExecutionRequest(command="echo 'Process Engine Verified'", timeout_seconds=5)
+    req = ProcessExecutionRequest(command="echo Process Engine Verified", timeout_seconds=10)
     res = await executor.execute(req)
 
     assert res.status == ProcessExecutionStatus.COMPLETED

@@ -25,7 +25,7 @@ class OSControllerEngine:
         try:
             import win32api
             win32api.SetCursorPos((x, y))
-        except ImportError:
+        except Exception:
             pass
 
         return old_pos, self._current_mouse_pos
@@ -63,7 +63,6 @@ class OSControllerEngine:
         old_text = self._clipboard_content
         self._clipboard_content = text
         return old_text, text
-
 
     # --- Window Management ---
 

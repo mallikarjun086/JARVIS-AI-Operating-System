@@ -94,7 +94,7 @@ class Settings(BaseSettings):
     ENABLE_VOICE_STT: bool = Field(default=True)
     ENABLE_VOICE_TTS: bool = Field(default=True)
     ENABLE_BROWSER_AUTOMATION: bool = Field(default=True)
-    ENABLE_DESKTOP_AUTOMATION: bool = Field(default=False, description="Disabled by default — requires pyautogui")
+    ENABLE_DESKTOP_AUTOMATION: bool = Field(default=True, description="Enabled desktop automation suite")
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod

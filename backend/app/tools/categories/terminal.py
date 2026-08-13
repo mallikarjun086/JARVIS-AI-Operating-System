@@ -1,5 +1,6 @@
 """
 Terminal Tools Category (ExecuteCommandTool).
+Includes sandboxed safety gatekeeper blocking destructive command patterns.
 """
 
 import asyncio
@@ -36,7 +37,13 @@ class ExecuteCommandTool(BaseTool):
 
     async def execute(self, params: Dict[str, Any], context: Dict[str, Any]) -> Dict[str, Any]:
         cmd = params["command"]
+        cmd_lower = cmd.lower().strip()
         cwd = params.get("cwd")
+
+        # Safety gatekeeper: block destructive system commands
+        blocked_terms = ["rm -rf", "fdisk", "format", "del /f", "mkfs", "dd if=", ":(){ :|:& };:"]
+        if any(term in cmd_lower for term in blocked_terms):
+            raise PermissionError(f"Destructive terminal command blocked by safety gatekeeper: '{cmd}'")
 
         proc = await asyncio.create_subprocess_shell(
             cmd,

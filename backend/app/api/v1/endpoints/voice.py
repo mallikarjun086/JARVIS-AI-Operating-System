@@ -48,6 +48,15 @@ async def detect_wake_word(
     return wake_word_detector.detect_wake_word(transcript=transcript)
 
 
+@router.post("/wake-word/start", summary="Start Wake Word Listener Event Stream")
+async def start_wake_word_stream(
+    current_user: User = Depends(get_current_user)
+):
+    """Emits SSE stream for continuous wake-word listening events."""
+    from fastapi.responses import StreamingResponse
+    return StreamingResponse(wake_word_detector.stream_wake_word_events(), media_type="text/event-stream")
+
+
 @router.post("/stt", response_model=STTResponse, summary="Perform Low-Latency Speech-to-Text")
 async def speech_to_text(
     audio_base64: str = Query("sample_audio_base64", description="Base64 audio bytes"),

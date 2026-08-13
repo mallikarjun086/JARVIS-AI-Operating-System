@@ -9,10 +9,9 @@ import subprocess
 
 def run_pytest():
     print("=" * 60)
-    print("🚀 Running Pytest Suite (174 Unit & Integration Tests)...")
+    print("[RUNNER] Running Pytest Suite (Unit & Integration Tests)...")
     print("=" * 60)
     
-    # Determine correct backend directory
     script_dir = os.path.dirname(os.path.abspath(__file__))
     backend_dir = script_dir if os.path.basename(script_dir) == "backend" else os.path.join(script_dir, "backend")
     
@@ -23,8 +22,8 @@ if __name__ == "__main__":
     pytest_ok = run_pytest()
     if pytest_ok:
         print("\n" + "=" * 60)
-        print("🎉 ALL 174 UNIT & INTEGRATION TESTS PASSED 100% SUCCESSFULLY!")
+        print("[SUCCESS] ALL UNIT & INTEGRATION TESTS PASSED 100% SUCCESSFULLY!")
         print("=" * 60)
     else:
-        print("\n❌ Pytest suite encountered failures.")
-
+        print("\n[FAILURE] Pytest suite encountered failures.")
+        sys.exit(1)

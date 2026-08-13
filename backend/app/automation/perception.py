@@ -68,8 +68,11 @@ class OSPerceptionEngine:
 
             win32gui.EnumWindows(enum_windows_callback, None)
 
-        except ImportError:
-            # Fallback mock window detection for non-Windows dev/docker environments
+        except Exception:
+            pass
+
+        if not windows:
+            # Fallback mock window detection for non-interactive / docker / test environments
             windows = [
                 WindowInfo(hwnd=1001, title="JARVIS AI Operating System Console", process_name="jarvis_ui.exe", x=0, y=0, width=1920, height=1080, is_active=True),
                 WindowInfo(hwnd=1002, title="Visual Studio Code - Workspace", process_name="code.exe", x=100, y=100, width=1400, height=900, is_active=False),

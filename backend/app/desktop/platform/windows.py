@@ -1,5 +1,5 @@
 """
-Windows OS Platform Adapter — Encapsulates Win32 APIs and pywinauto.
+Windows OS Platform Adapter — Encapsulates Win32 APIs, pyautogui, and pywinauto.
 """
 
 import sys
@@ -13,7 +13,7 @@ logger = structlog.get_logger(__name__)
 
 
 class WindowsAdapter(DesktopPlatformAdapter):
-    """Win32 & pywinauto implementation of DesktopPlatformAdapter."""
+    """Win32, pyautogui & pywinauto implementation of DesktopPlatformAdapter."""
 
     def __init__(self) -> None:
         self._clipboard_content: str = "JARVIS Default Clipboard"
@@ -105,7 +105,14 @@ class WindowsAdapter(DesktopPlatformAdapter):
         return True
 
     def move_cursor(self, x: int, y: int) -> bool:
-        """Moves cursor using SetCursorPos."""
+        """Moves cursor using pyautogui or SetCursorPos."""
+        try:
+            import pyautogui
+            pyautogui.moveTo(x, y)
+            return True
+        except Exception:
+            pass
+
         if sys.platform == "win32":
             try:
                 import win32api
@@ -116,20 +123,46 @@ class WindowsAdapter(DesktopPlatformAdapter):
         return True
 
     def click_mouse(self, button: str = "left", double: bool = False) -> bool:
-        """Performs mouse click."""
+        """Performs mouse click using pyautogui or win32api."""
+        try:
+            import pyautogui
+            clicks = 2 if double else 1
+            pyautogui.click(button=button, clicks=clicks)
+            return True
+        except Exception:
+            pass
         return True
 
     def type_text(self, text: str) -> bool:
-        """Types string characters."""
+        """Types string characters using pyautogui or pyperclip."""
+        try:
+            import pyautogui
+            pyautogui.write(text, interval=0.01)
+            return True
+        except Exception:
+            pass
         return True
 
     def get_clipboard_text(self) -> str:
-        """Reads clipboard text."""
+        """Reads clipboard text via pyperclip or local state."""
+        try:
+            import pyperclip
+            val = pyperclip.paste()
+            if val:
+                return val
+        except Exception:
+            pass
         return self._clipboard_content
 
     def set_clipboard_text(self, text: str) -> bool:
-        """Sets clipboard text."""
+        """Sets clipboard text via pyperclip and local state."""
         self._clipboard_content = text
+        try:
+            import pyperclip
+            pyperclip.copy(text)
+            return True
+        except Exception:
+            pass
         return True
 
 

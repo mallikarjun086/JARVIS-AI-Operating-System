@@ -1,6 +1,6 @@
 """
-Voice Assistant Manager Engine (Sprint 11).
-Orchestrates wake word detection, STT, LLM reasoning, TTS audio streaming, interruption, memory sync, and telemetry.
+Voice Assistant Manager Engine.
+Orchestrates wake word detection, STT, real LLM reasoning & tool execution via Jarvis Orchestrator, TTS audio streaming, interruption, memory sync, and telemetry.
 Integrated with Security Engine, Memory Manager, Event Bus, and Telemetry.
 """
 
@@ -10,6 +10,8 @@ import structlog
 from app.ai.router import llm_router
 from app.ai.schemas import LLMMessage, LLMRequest, MessageRole
 from app.core.event_bus import SystemEvent, event_bus
+from app.jarvis.orchestrator import jarvis_orchestrator
+from app.jarvis.schemas import JarvisCommandRequest
 from app.memory.manager import memory_manager
 from app.security.manager import security_engine
 from app.voice.interruption import interruption_controller
@@ -38,7 +40,7 @@ class VoiceAssistantManager:
         2. Resets interruption flag.
         3. Performs Speech-to-Text (STT) transcription.
         4. Detects wake word.
-        5. Generates LLM conversation response.
+        5. Executes intent reasoning & multi-agent tool pipeline via Jarvis Orchestrator.
         6. Synthesizes Text-to-Speech (TTS) audio stream.
         7. Persists interaction episode into Memory Engine (redacted).
         8. Publishes event over SystemEventBus and records telemetry.
@@ -48,7 +50,6 @@ class VoiceAssistantManager:
 
         interruption_controller.reset_interruption()
         await event_bus.publish(SystemEvent(event_type="VoiceInteractionStarted", source_subsystem="VoiceAssistantManager"))
-
 
         # 1. Speech-to-Text Transcription
         transcript = req.text_prompt
@@ -65,23 +66,34 @@ class VoiceAssistantManager:
         # 2. Wake Word Detection
         wake_status = wake_word_detector.detect_wake_word(transcript=transcript)
 
-        # 3. LLM Reasoning Response
-        llm_req = LLMRequest(
-            model="mock-gpt",
-            messages=[LLMMessage(role=MessageRole.USER, content=transcript)],
-            system_prompt="You are JARVIS Voice Assistant. Provide concise natural spoken responses."
-        )
-        llm_res = await llm_router.generate_completion(llm_req)
-        clean_response = security_engine.scrub_text(llm_res.content)
+        # 3. Real LLM Intent & Multi-Agent Execution via Jarvis Orchestrator
+        try:
+            orch_req = JarvisCommandRequest(command=transcript, session_id=req.session_id, voice_input=True)
+            orch_res = await jarvis_orchestrator.execute_command(orch_req, user_role=user_role)
+            response_text = orch_res.response_text
+        except Exception as e:
+            logger.warning("Voice orchestrator execution fallback", error=str(e))
+            llm_req = LLMRequest(
+                model="gpt-4o",
+                messages=[LLMMessage(role=MessageRole.USER, content=transcript)],
+                system_prompt="You are JARVIS Voice Assistant. Provide concise natural spoken responses."
+            )
+            llm_res = await llm_router.generate_completion(llm_req)
+            response_text = llm_res.content
+
+        clean_response = security_engine.scrub_text(response_text)
 
         # 4. Text-to-Speech Audio Synthesis
         tts_res = tts_engine.synthesize_speech(TTSRequest(text=clean_response))
 
         # 5. Persist to Memory Engine (Redacted)
-        await memory_manager.store_memory(
-            content=f"Voice Turn: User: '{transcript}' -> JARVIS: '{clean_response}'",
-            category="voice_episode"
-        )
+        try:
+            await memory_manager.store_memory(
+                content=f"Voice Turn: User: '{transcript}' -> JARVIS: '{clean_response}'",
+                category="voice_episode"
+            )
+        except Exception:
+            pass
 
         interrupted = interruption_controller.is_interrupted()
         voice_telemetry.record_interaction(stt_latency, tts_res.latency_ms, interrupted)
@@ -94,7 +106,6 @@ class VoiceAssistantManager:
                 payload={"transcript": transcript, "total_latency_ms": total_latency}
             )
         )
-
 
         return VoiceInteractionResponse(
             transcript=transcript,
